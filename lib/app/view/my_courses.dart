@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/app/controller/my_courses_controller.dart';
 import 'package:flutter_app/app/helper/router.dart';
 import 'package:flutter_app/app/view/components/item-my-course.dart';
+import 'package:flutter_app/app/view/components/skeleton_course_card.dart';
 import 'package:flutter_app/l10n/locale_keys.g.dart';
 import 'package:get/get.dart';
 import 'package:indexed/indexed.dart';
@@ -322,42 +323,52 @@ class _MyCoursesScreenState extends State<MyCoursesScreen> {
                         ],
                       ),
                 (value.parser.getToken() != '')
-                    ? (value.coursesList.isNotEmpty)
+                    ? value.isLoading && value.coursesList.isEmpty
                         ? Expanded(
-                            child: RefreshIndicator(
-                              onRefresh: () => value.refreshData(),
-                              child: ListView.builder(
-                                  padding: const EdgeInsets.only(bottom: 100), // Nav bar space
-                                  controller: value.scrollController,
-                                  itemCount: value.coursesList.length +
-                                      (value.isLoadingMore ? 1 : 0),
-                                  itemBuilder: (context, index) {
-                                    if (index == value.coursesList.length) {
-                                      return const Center(
-                                          child: SizedBox(
-                                        width: 20.0,
-                                        height: 20.0,
-                                        child: CircularProgressIndicator(),
-                                      ));
-                                    } else if (index <
-                                        value.coursesList.length) {
-                                      return ItemMyCourse(
-                                        item: value.coursesList[index],
-                                      );
-                                    } else {
-                                      return Container();
-                                    }
-                                  }),
+                            child: ShimmerEffect(
+                              child: SkeletonMyCourseLoadingList(
+                                screenWidth: screenWidth,
+                              ),
                             ),
                           )
-                        : Container(
-                            margin: EdgeInsets.only(top: 50),
-                            child: Text(
-                              tr(LocaleKeys.dataNotFound),
-                              style: TextStyle(
-                                  fontSize: 12, color: Colors.grey.shade500),
-                            ),
-                          )
+                        : (value.coursesList.isNotEmpty)
+                            ? Expanded(
+                                child: RefreshIndicator(
+                                  onRefresh: () => value.refreshData(),
+                                  child: ListView.builder(
+                                      padding: const EdgeInsets.only(
+                                          top: 32, bottom: 100), // Top + Nav bar space
+                                      controller: value.scrollController,
+                                      itemCount: value.coursesList.length +
+                                          (value.isLoadingMore ? 1 : 0),
+                                      itemBuilder: (context, index) {
+                                        if (index == value.coursesList.length) {
+                                          return const Center(
+                                              child: SizedBox(
+                                            width: 20.0,
+                                            height: 20.0,
+                                            child: CircularProgressIndicator(),
+                                          ));
+                                        } else if (index <
+                                            value.coursesList.length) {
+                                          return ItemMyCourse(
+                                            item: value.coursesList[index],
+                                          );
+                                        } else {
+                                          return Container();
+                                        }
+                                      }),
+                                ),
+                              )
+                            : Container(
+                                margin: EdgeInsets.only(top: 50),
+                                child: Text(
+                                  tr(LocaleKeys.dataNotFound),
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.grey.shade500),
+                                ),
+                              )
                     : Text(''),
               ],
             ),

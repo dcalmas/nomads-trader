@@ -28,7 +28,7 @@ class ItemCourse extends StatelessWidget with GetItMixin {
       });
 
   void onNavigate() {
-    Get.toNamed(AppRouter.getCourseDetailRoute(),
+    Get.toNamed(AppRouter.courseDetail,
         arguments: [item.id], preventDuplicates: false);
   }
 

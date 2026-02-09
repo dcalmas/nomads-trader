@@ -65,7 +65,7 @@ class NewCourse extends StatelessWidget with GetItMixin {
                                 child: GestureDetector(
                                   onTap: () => {
                                     Get.toNamed(
-                                        AppRouter.getCourseDetailRoute(),
+                                        AppRouter.courseDetail,
                                         arguments: [newCoursesList[index].id])
                                   },
                                   child: Column(

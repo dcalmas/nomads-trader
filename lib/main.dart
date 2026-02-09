@@ -48,6 +48,9 @@ Future<void> main() async {
       DeviceOrientation.portraitUp,
     ]);
 
+    // 3) Status bar - iOS үшін edge-to-edge режимі
+    await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+
     // 3) DI / bindings
     await MainBinding().dependencies();
     setupLocator();

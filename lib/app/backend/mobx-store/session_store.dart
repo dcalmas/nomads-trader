@@ -41,6 +41,14 @@ abstract class _SessionStore with Store {
 
   Future<void> getUser() async {
     final apiService = ApiService(appBaseUrl: Environments.apiBaseURL);
+    
+    // If sharedPreferencesManager is not initialized, we can't fetch user data
+    // This can happen when login is called directly without going through splash
+    if (sharedPreferencesManager == null) {
+      print("SessionStore DEBUG: sharedPreferencesManager is null, skipping getUser");
+      return;
+    }
+    
     String tokenTemp = getToken();
     setToken(tokenTemp);
     if (token == "") return;
@@ -60,12 +68,24 @@ abstract class _SessionStore with Store {
   }
 
   String getToken() {
+    if (sharedPreferencesManager == null) {
+      print("SessionStore DEBUG: getToken() - sharedPreferencesManager is null, returning empty");
+      return "";
+    }
     return sharedPreferencesManager!.getString('token') ?? "";
   }
+  
   String getCurrentCoursesId(){
+    if (sharedPreferencesManager == null) {
+      return "";
+    }
     return sharedPreferencesManager!.getString('overview') ?? "";
   }
+  
   String getFcmToken(){
+    if (sharedPreferencesManager == null) {
+      return "";
+    }
     return sharedPreferencesManager!.getString('fcm_token') ?? "";
   }
 }

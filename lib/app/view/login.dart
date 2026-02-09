@@ -169,10 +169,9 @@ class _LoginPageState extends State<LoginScreen> {
                   const SizedBox(height: 16),
                   // Login button
                   ElevatedButton(
-                    onPressed: () => {
+                    onPressed: () {
                       loginController.login(
-                          usernameController.text, passwordController.text),
-                      sessionStore.getUser()
+                          usernameController.text, passwordController.text);
                     },
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.amber,

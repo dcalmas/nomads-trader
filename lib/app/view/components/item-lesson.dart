@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/app/backend/models/lesson-model.dart';
 import 'package:flutter_app/app/helper/function_helper.dart';
+import 'package:flutter_app/app/view/components/course_doc_tile.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 
 typedef OnNavigateCallback = void Function(dynamic item);
@@ -33,6 +34,49 @@ class _ItemLessonState extends State<AccordionItemLesson> {
   void initState() {
     _showContent = widget.showContent;
     super.initState();
+  }
+
+  /// Build the documents section for a lesson item
+  Widget _buildDocumentsSection() {
+    if (widget.item.documents == null || widget.item.documents!.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    return Container(
+      margin: const EdgeInsets.only(top: 8, left: 24, right: 16, bottom: 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Documents header
+          Row(
+            children: [
+              Icon(
+                Icons.attach_file,
+                size: 16,
+                color: Colors.grey.shade600,
+              ),
+              const SizedBox(width: 4),
+              Text(
+                'Documents',
+                style: TextStyle(
+                  fontFamily: 'medium',
+                  fontSize: 12,
+                  color: Colors.grey.shade600,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          // Document tiles
+          ...widget.item.documents!.map(
+            (doc) => Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: CourseDocTile(document: doc),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   @override

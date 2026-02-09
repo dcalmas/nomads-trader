@@ -66,7 +66,7 @@ class TopCourse extends StatelessWidget {
                                 padding: const EdgeInsets.fromLTRB(16, 0, 0, 0),
                                 child: GestureDetector(
                                     onTap: () => {
-                                          Get.toNamed(AppRouter.getCourseDetailRoute(),
+                                          Get.toNamed(AppRouter.courseDetail,
                                               arguments: [topCoursesList[index].id])
                                         },
                                     child: Column(

@@ -49,9 +49,10 @@ class ItemMyCourse extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                     image: DecorationImage(
                       fit: BoxFit.cover,
-                      image: !item.image!.contains('placeholder')?NetworkImage(
-                        item.image!):Image.asset("assets/images/placeholder-500x300.png").image,
-                    ), // Widget con của
+                      image: (item.image != null && item.image!.isNotEmpty && !item.image!.contains('placeholder')) 
+                        ? NetworkImage(item.image!) 
+                        : const AssetImage("assets/images/placeholder-500x300.png"),
+                    ),
                   ),
                 ),
                 Container(

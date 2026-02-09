@@ -160,7 +160,7 @@ class InstructorDetailController extends GetxController {
             ),
             onPressed: () => {
               Navigator.pop(context),
-              Get.toNamed(AppRouter.getLoginRoute())
+              Get.toNamed(AppRouter.login)
             },
           ),
         ],

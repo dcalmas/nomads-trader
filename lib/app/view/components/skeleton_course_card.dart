@@ -1,4 +1,116 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
+
+class SkeletonMyCourseCard extends StatelessWidget {
+  final double screenWidth;
+
+  const SkeletonMyCourseCard({super.key, required this.screenWidth});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      margin: const EdgeInsets.only(bottom: 12),
+      child: Row(
+        children: [
+          // Image placeholder
+          Container(
+            width: 100,
+            height: 100,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: Colors.grey[200],
+            ),
+          ),
+          Container(
+            width: screenWidth - 100 - 32,
+            height: 100,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Category placeholder
+                Container(
+                  width: (screenWidth - 100 - 32) * 0.4,
+                  height: 10,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4),
+                    color: Colors.grey[200],
+                  ),
+                ),
+                // Title placeholder
+                Container(
+                  width: screenWidth - 100 - 32,
+                  height: 13,
+                  margin: const EdgeInsets.symmetric(vertical: 8),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4),
+                    color: Colors.grey[200],
+                  ),
+                ),
+                // Progress bar placeholder
+                Container(
+                  width: screenWidth - 100 - 32,
+                  height: 3,
+                  margin: const EdgeInsets.only(bottom: 10),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(2),
+                    color: Colors.grey[200],
+                  ),
+                ),
+                // Status and duration placeholders
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      width: (screenWidth - 100 - 32) * 0.35,
+                      height: 12,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                        color: Colors.grey[200],
+                      ),
+                    ),
+                    Container(
+                      width: (screenWidth - 100 - 32) * 0.25,
+                      height: 12,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                        color: Colors.grey[200],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class SkeletonMyCourseLoadingList extends StatelessWidget {
+  final int itemCount;
+  final double screenWidth;
+
+  const SkeletonMyCourseLoadingList({
+    super.key,
+    this.itemCount = 5,
+    required this.screenWidth,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      padding: const EdgeInsets.only(bottom: 100),
+      itemCount: itemCount,
+      itemBuilder: (context, index) {
+        return SkeletonMyCourseCard(screenWidth: screenWidth);
+      },
+    );
+  }
+}
 
 class SkeletonCourseCard extends StatelessWidget {
   final double width;

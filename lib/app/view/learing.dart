@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +39,7 @@ class _LearningScreenState extends State<LearningScreen> {
       (window.physicalSize.longestSide / window.devicePixelRatio);
 
   bool _isRecording = false;
+  Timer? _timer;
 
   @override
   void initState() {
@@ -45,10 +47,21 @@ class _LearningScreenState extends State<LearningScreen> {
     _initScreenProtection();
     // Android best effort: make recording black
     ScreenProtector.preventScreenshotOn();
+    
+    // Fallback: Check every 2 seconds
+    _timer = Timer.periodic(const Duration(seconds: 2), (timer) async {
+       final isRecording = await ScreenProtector.isRecording();
+       if (_isRecording != isRecording && mounted) {
+         setState(() {
+           _isRecording = isRecording;
+         });
+       }
+    });
   }
 
   @override
   void dispose() {
+    _timer?.cancel();
     ScreenProtector.removeListener();
     ScreenProtector.preventScreenshotOff();
     super.dispose();
@@ -62,10 +75,12 @@ class _LearningScreenState extends State<LearningScreen> {
     });
 
     // Recording listener
-    ScreenProtector.addListener(null, (bool? recording) {
+    ScreenProtector.addListener(null, (bool? recording) async {
+      // Force check status again to be sure
+      final isRec = await ScreenProtector.isRecording();
       if (mounted) {
         setState(() {
-          _isRecording = recording ?? false;
+          _isRecording = isRec;
         });
       }
     });

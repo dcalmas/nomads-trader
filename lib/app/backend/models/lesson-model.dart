@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_app/app/backend/models/cate-model.dart';
+import 'package:flutter_app/app/backend/models/course_document.dart';
 
 class ItemLesson {
   int? id;
@@ -41,6 +42,9 @@ class LessonModel {
   int? order;
   List<ItemLesson>? items;
   bool isExpanded = false;
+  
+  // Documents attached to this lesson
+  List<CourseDocument>? documents;
 
   List<CategoryModel>? categories = [];
   dynamic meta_data;
@@ -53,6 +57,7 @@ class LessonModel {
     this.order,
     this.items,
     this.isExpanded = false,
+    this.documents,
   });
 
   LessonModel.fromJson(Map<String, dynamic> json) {
@@ -70,5 +75,15 @@ class LessonModel {
       temp.add(cate);
     }
     items = temp;
+
+    // Parse documents if present
+    if (json['documents'] != null && json['documents'] is List) {
+      String docsData = jsonEncode(json['documents']);
+      List<dynamic> docsList = jsonDecode(docsData);
+      documents = docsList
+          .map((doc) => CourseDocument.fromJson(doc))
+          .where((doc) => doc.url.isNotEmpty)
+          .toList();
+    }
   }
 }

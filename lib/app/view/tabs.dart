@@ -6,6 +6,7 @@ import 'dart:math' as math;
 import 'package:flutter_app/app/controller/courses_controller.dart';
 import 'package:flutter_app/app/controller/home_controller.dart';
 import 'package:flutter_app/app/controller/my_courses_controller.dart';
+import 'package:flutter_app/app/controller/my_profile_controller.dart';
 import 'package:flutter_app/app/controller/notification_controller.dart';
 import 'package:flutter_app/app/controller/payment_controller.dart';
 import 'package:flutter_app/app/util/theme.dart';
@@ -50,6 +51,8 @@ class _TabScreenState extends State<TabScreen>
   Get.put(PaymentController(parser: Get.find()));
   final NotificationController notificationController =
   Get.put(NotificationController(parser: Get.find()));
+  final MyProfileController myProfileController =
+  Get.put(MyProfileController(parser: Get.find()));
 
   // Tab data
   final List<Map<String, dynamic>> _tabItems = [

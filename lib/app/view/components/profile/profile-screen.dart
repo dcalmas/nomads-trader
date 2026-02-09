@@ -8,7 +8,6 @@ import 'package:flutter_app/app/helper/router.dart';
 import 'package:flutter_app/l10n/locale_keys.g.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
-import 'package:indexed/indexed.dart';
 
 import '../../../controller/profile_controller.dart';
 import '../../../env.dart';
@@ -59,322 +58,247 @@ class _Profile extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     final value = widget.profileController;
+    final isAuthorized = widget.myProfileParser.getToken() != '';
+
     return Scaffold(
-        key: _scaffoldKey,
-        backgroundColor: Colors.white,
-        drawerEnableOpenDragGesture: false,
-        body: Stack(children: <Widget>[
-          Indexed(
-            index: 1,
-            child: Positioned(
-              right: 0,
-              top: 0,
-              child: Container(
-                width: (276 / 375) * screenWidth,
-                height: (209 / 375) * screenWidth,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage(
-                        'assets/images/banner-my-course.png',
-                      ),
-                      fit: BoxFit.contain),
-                ),
+      key: _scaffoldKey,
+      backgroundColor: Colors.white,
+      drawerEnableOpenDragGesture: false,
+      body: Column(
+        children: [
+          // Top padding
+          Container(
+            height: MediaQuery.of(context).viewPadding.top,
+          ),
+          // Title
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 16),
+            child: Text(
+              tr(LocaleKeys.profile_title),
+              style: const TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.w600,
+                color: Colors.black,
               ),
             ),
           ),
-          Column(
-            children: [
-              Container(
-                padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).viewPadding.top),
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Text(
-                    tr(LocaleKeys.profile_title),
-                    style: const TextStyle(
-                        fontSize: 22, fontWeight: FontWeight.w600),
-                  ),
-                ),
-              ),
-              widget.myProfileParser.getToken() == ''
-                  ? Container(
-                      width: screenWidth,
-                      height: screenHeight * 0.7,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: screenWidth * 0.8,
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 30,
-                              horizontal: 24,
-                            ),
+          // Profile header row
+          GestureDetector(
+            onTap: isAuthorized ? null : onLogin,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              child: Row(
+                children: [
+                  // Avatar
+                  Container(
+                    width: 60,
+                    height: 60,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: Colors.grey.shade200,
+                    ),
+                    child: isAuthorized
+                        ? value.userInfo.avatar_url != ""
+                            ? ClipRRect(
+                                borderRadius: BorderRadius.circular(12),
+                                child: Image.network(
+                                  value.userInfo.avatar_url,
+                                  fit: BoxFit.cover,
+                                ),
+                              )
+                            : Image.asset(
+                                'assets/images/default-user-avatar.jpg',
+                                fit: BoxFit.cover,
+                              )
+                        : Container(
                             decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
                               color: const Color(0xFF4A6CF7),
-                              borderRadius: BorderRadius.circular(24),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.15),
-                                  spreadRadius: 0,
-                                  blurRadius: 20,
-                                  offset: const Offset(0, 10),
-                                ),
-                              ],
                             ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Container(
-                                  width: 60,
-                                  height: 60,
-                                  margin: const EdgeInsets.only(bottom: 16),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white.withOpacity(0.2),
-                                    borderRadius: BorderRadius.circular(30),
-                                    border: Border.all(
-                                      color: Colors.white.withOpacity(0.3),
-                                      width: 2,
-                                    ),
-                                  ),
-                                  child: const Icon(
-                                    Icons.lock_outline,
-                                    size: 28,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                Text(
-                                  tr(LocaleKeys.needLogin),
-                                  style: const TextStyle(
-                                    fontFamily: 'Poppins',
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.white,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                                const SizedBox(height: 24),
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: const Color(0xFFFF9F0A),
-                                    padding: const EdgeInsets.symmetric(
-                                      vertical: 12,
-                                      horizontal: 48,
-                                    ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(16),
-                                    ),
-                                  ),
-                                  onPressed: onLogin,
-                                  child: Text(
-                                    tr(LocaleKeys.login),
-                                    style: const TextStyle(
-                                      fontFamily: 'Poppins',
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ),
-                              ],
+                            child: const Icon(
+                              Icons.person_outline,
+                              size: 28,
+                              color: Colors.white,
                             ),
                           ),
-                        ],
-                      ),
-                    )
-                  : SingleChildScrollView(
-                      scrollDirection: Axis.vertical,
-                      child: Stack(children: [
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 16),
-                          child: Column(
+                  ),
+                  const SizedBox(width: 16),
+                  // User info
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (isAuthorized)
+                          Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
-                                padding: EdgeInsets.symmetric(vertical: 24),
-                                child: Row(
+                              Text(
+                                value.userInfo.name ??
+                                    (value.userInfo.description ?? ''),
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
+                              if (value.userInfo.email != null)
+                                Row(
                                   children: [
-                                    value.userInfo.avatar_url != ""
-                                        ? Container(
-                                            width: 46,
-                                            height: 46,
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(23),
-                                                image: DecorationImage(
-                                                  fit: BoxFit.cover,
-                                                  image: NetworkImage(value
-                                                      .userInfo.avatar_url),
-                                                )))
-                                        : CircleAvatar(
-                                            radius: 23,
-                                            backgroundImage: Image.asset(
-                                              'assets/images/default-user-avatar.jpg',
-                                            ).image,
-                                          ),
-                                    SizedBox(width: 15),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            value.userInfo.name ?? '',
-                                            style: TextStyle(
-                                                fontFamily: "Poppins-Medium",
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w500),
-                                          ),
-                                          SizedBox(
-                                            height: 4,
-                                          ),
-                                          if (value.userInfo.description != '')
-                                            Text(
-                                                value.userInfo.description ??
-                                                    '',
-                                                style: TextStyle(
-                                                    fontSize: 14,
-                                                    color:
-                                                        Colors.grey.shade700)),
-                                          SizedBox(
-                                            height: 4,
-                                          ),
-                                          if (value.userInfo.email != null)
-                                            Row(
-                                              children: [
-                                                Icon(
-                                                  Icons.email_outlined,
-                                                  color: Colors.amber,
-                                                  size: 18,
-                                                ),
-                                                SizedBox(
-                                                  width: 8,
-                                                ),
-                                                Text(value.userInfo.email ?? '',
-                                                    style: TextStyle(
-                                                        fontSize: 14,
-                                                        color: Colors
-                                                            .grey.shade700)),
-                                              ],
-                                            ),
-                                        ],
+                                    const Icon(
+                                      Icons.email_outlined,
+                                      size: 16,
+                                      color: Colors.grey,
+                                    ),
+                                    const SizedBox(width: 4),
+                                    Text(
+                                      value.userInfo.email ?? '',
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.grey,
                                       ),
                                     ),
                                   ],
                                 ),
-                              ),
-                              Divider(
-                                height: 20,
-                                thickness: 0.7,
-                                indent: 35,
-                                endIndent: 35,
-                                color: Colors.grey.shade400,
-                              ),
-                              Align(
-                                alignment: Alignment.center,
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 50),
-                                  child: Column(
-                                    children: [
-                                      SizedBox(height: 30),
-                                      GestureDetector(
-                                        onTap: () => {widget.goToPage(1)},
-                                        child: Row(
-                                          children: [
-                                            Container(
-                                              width: 50,
-                                              height: 50,
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(12),
-                                                color: Color(0xFF36CE61),
-                                              ),
-                                              child: Icon(Feather.settings,
-                                                  size: 20,
-                                                  color: Colors.white),
-                                            ),
-                                            SizedBox(width: 10),
-                                            Text(
-                                              tr(
-                                                LocaleKeys.settings_title,
-                                              ),
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w500),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(height: 15),
-                                      GestureDetector(
-                                        onTap: () => {widget.goToPage(2)},
-                                        child: Row(
-                                          children: [
-                                            Container(
-                                              width: 50,
-                                              height: 50,
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(12),
-                                                color: Color(0xFFF8C719),
-                                              ),
-                                              child: Icon(Feather.shopping_bag,
-                                                  size: 20,
-                                                  color: Colors.white),
-                                            ),
-                                            SizedBox(width: 10),
-                                            Text(
-                                              tr(LocaleKeys.myOrders_title),
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w500),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(height: 15),
-                                      SizedBox(height: 40),
-                                      Divider(
-                                        height: 20,
-                                        thickness: 0.7,
-                                        indent: 0,
-                                        endIndent: 0,
-                                        color: Colors.grey.shade400,
-                                      ),
-                                      SizedBox(height: 50),
-                                      GestureDetector(
-                                        onTap: value.logout,
-                                        child: Row(
-                                          children: [
-                                            Icon(Icons.logout_outlined,
-                                                size: 20,
-                                                color: Color(0xFFFF3535)),
-                                            SizedBox(width: 14),
-                                            Text(
-                                              tr(LocaleKeys.logout),
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w500),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
                             ],
+                          )
+                        else
+                          const Text(
+                            "Вход/Регистрация",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black,
+                            ),
                           ),
-                        )
-                      ]),
+                      ],
                     ),
-              SizedBox(
-                height: widget.myProfileParser.getToken() != '' ? 200 : 50,
+                  ),
+                  // Chevron
+                  const Icon(
+                    Ionicons.chevron_forward_outline,
+                    size: 20,
+                    color: Colors.grey,
+                  ),
+                ],
               ),
-              Text(
-                LocaleKeys.profile_version,
-                style: TextStyle(fontFamily: 'poppins', fontSize: 12),
-              ).tr(args: [Environments.appVersion, Environments.appBuild])
-            ],
-          )
-        ]));
+            ),
+          ),
+          // Divider
+          Container(
+            height: 1,
+            color: Colors.grey.shade200,
+            margin: const EdgeInsets.symmetric(horizontal: 16),
+          ),
+          // Settings list
+          Expanded(
+            child: ListView(
+              children: [
+                // General settings
+                _buildSettingsItem(
+                  icon: Feather.settings,
+                  title: tr(LocaleKeys.settings_general),
+                  iconColor: const Color(0xFF4A6CF7),
+                  onTap: () => Get.toNamed(AppRouter.general),
+                ),
+                // Password settings
+                _buildSettingsItem(
+                  icon: Feather.lock,
+                  title: tr(LocaleKeys.settings_password),
+                  iconColor: const Color(0xFF4A6CF7),
+                  onTap: () => Get.toNamed(AppRouter.password),
+                ),
+                // Language settings
+                _buildSettingsItem(
+                  icon: Ionicons.language,
+                  title: tr(LocaleKeys.language),
+                  iconColor: const Color(0xFF4A6CF7),
+                  onTap: () => Get.toNamed(AppRouter.language),
+                ),
+                // Delete account
+                _buildSettingsItem(
+                  icon: Feather.trash_2,
+                  title: tr(LocaleKeys.settings_deleteAccount),
+                  iconColor: const Color(0xFF4A6CF7),
+                  onTap: () => Get.toNamed(AppRouter.delete),
+                ),
+              ],
+            ),
+          ),
+          // Version info
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            child: Text(
+              LocaleKeys.profile_version,
+              style: TextStyle(
+                fontFamily: 'poppins',
+                fontSize: 12,
+                color: Colors.grey.shade500,
+              ),
+            ).tr(args: [Environments.appVersion, Environments.appBuild]),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSettingsItem({
+    required IconData icon,
+    required String title,
+    required Color iconColor,
+    required VoidCallback onTap,
+  }) {
+    return Column(
+      children: [
+        GestureDetector(
+          onTap: onTap,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            child: Row(
+              children: [
+                // Icon container
+                Container(
+                  width: 44,
+                  height: 44,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: iconColor,
+                  ),
+                  child: Icon(
+                    icon,
+                    size: 20,
+                    color: Colors.white,
+                  ),
+                ),
+                const SizedBox(width: 16),
+                // Title
+                Expanded(
+                  child: Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+                // Chevron
+                const Icon(
+                  Ionicons.chevron_forward_outline,
+                  size: 20,
+                  color: Colors.grey,
+                ),
+              ],
+            ),
+          ),
+        ),
+        // Divider
+        Container(
+          height: 1,
+          color: Colors.grey.shade200,
+          margin: const EdgeInsets.symmetric(horizontal: 16),
+        ),
+      ],
+    );
   }
 }
