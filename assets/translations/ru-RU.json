@@ -1,0 +1,302 @@
+{
+  "login": "Вход",
+  "register": "Регистрация",
+  "logout": "Выход",
+  "lesson": "Урок",
+  "course": "Курс",
+  "quiz": "Тест",
+  "assignment": "Задание",
+  "instructor": "Инструктор",
+  "dataNotFound": "Данные не найдены",
+  "needLogin": "Вам необходимо войти в систему для доступа к этому контенту",
+  "free": "БЕСПЛАТНО",
+  "sale": "СКИДКА",
+  "durations": "Продолжительность: ",
+  "alert": {
+    "logoutTxt": "Вы уверены, что хотите выйти?",
+    "ok": "ОК",
+    "cancel": "Отмена",
+    "notLoggedIn": "Вы не вошли в систему",
+    "loggedIn": "Пожалуйста, войдите, чтобы продолжить.",
+    "btnLogin": "Вход",
+    "restorePurchases": "Восстановить покупки",
+    "restorePurchasesSuccess": "Покупки успешно восстановлены",
+    "restorePurchasesError": "Вы не можете восстановить этот курс"
+  },
+  "bottomNavigation": {
+    "home": "Главная",
+    "courses": "Курсы",
+    "myCourse": "Мои курсы",
+    "wishlist": "Избранное",
+    "profile": "Профиль"
+  },
+  "loginScreen": {
+    "title": "Войдите в свой аккаунт",
+    "usernamePlaceholder": "Имя пользователя",
+    "passwordPlaceholder": "Пароль",
+    "btnLogin": "Вход",
+    "forgotPassword": "Забыли пароль?",
+    "registerText": "Нет аккаунта?",
+    "register": "Зарегистрироваться",
+    "usernameEmpty": "Введите имя пользователя",
+    "passwordEmpty": "Введите пароль",
+    "usernameNotCorrect": "Неверное имя пользователя",
+    "passwordNotCorrect": "Неверный пароль",
+    "notFound": "Не найдено"
+  },
+  "registerScreen": {
+    "title": "Создать аккаунт",
+    "usernamePlaceholder": "Имя пользователя",
+    "emailPlaceholder": "Email",
+    "passwordPlaceholder": "Пароль",
+    "confirmPasswordPlaceholder": "Подтвердите пароль",
+    "termAndCondition": "Я согласен с условиями и положениями",
+    "btnSubmit": "Зарегистрироваться",
+    "usernameEmpty": "Имя пользователя обязательно",
+    "emailEmpty": "Email обязателен",
+    "validEmail": "Некорректный Email",
+    "passwordEmpty": "Пароль обязателен",
+    "confirmPasswordEmpty": "Подтверждение пароля обязательно",
+    "incorrectPassword": "Пароли не совпадают!",
+    "termAndConditionEmpty": "Вы должны согласиться с условиями"
+  },
+  "home": {
+    "overview": {
+      "title": "Обзор ваших последних курсов",
+      "section": "Раздел",
+      "sections": "Разделы"
+    },
+    "category": "Привет, что хочешь выучить сегодня?",
+    "popular": "Популярные курсы",
+    "new": "Новые курсы",
+    "countCourse": "Курсы",
+    "countStudent": "Студенты"
+  },
+  "courses": {
+    "title": "Курсы",
+    "searching": "Поиск",
+    "filters": {
+      "filter": "Фильтр",
+      "default": "По умолчанию",
+      "title": "Заголовок",
+      "sale": "Скидка",
+      "popular": "Популярные",
+      "newest": "Новые",
+      "oldest": "Старые"
+    }
+  },
+  "searchScreen": {
+    "placeholder": "Поиск...",
+    "title": "Последние поиски"
+  },
+  "myCourse": {
+    "title": "Мой курс",
+    "filters": {
+      "filter": "Фильтр",
+      "all": "Все",
+      "passed": "Пройденные",
+      "inProgress": "В процессе",
+      "failed": "Не пройденные"
+    }
+  },
+  "wishlist": {
+    "title": "Мои закладки"
+  },
+  "profile": {
+    "title": "Профиль",
+    "version": "Версия: {} - Сборка: {}"
+  },
+  "settings": {
+    "title": "Настройки",
+    "general": "Общие",
+    "password": "Пароль",
+    "deleteAccount": "Удалить аккаунт",
+    "upload": "Загрузить",
+    "update": "Обновить",
+    "bio": "Биография",
+    "firstName": "Имя",
+    "lastName": "Фамилия",
+    "nickName": "Никнейм",
+    "save": "Сохранить изменения",
+    "currentPassword": "Текущий пароль",
+    "newPassword": "Новый пароль",
+    "confirmNewPassword": "Подтвердите новый пароль",
+    "deleteAccountTitle": "Вы уверены, что хотите удалить этот аккаунт?",
+    "deleteAccountTitle2": "Аккаунт",
+    "deleteAccountContent": "Ваш аккаунт будет удален из нашей базы данных. Все курсы будут удалены.",
+    "deleteAccountContent2": "Введите ваш пароль для подтверждения:",
+    "deleteAccountBtn": "Удалить",
+    "chooseFrom": "Выбрать из",
+    "camera": "Камера",
+    "gallery": "Галерея",
+    "cancel": "Отмена",
+    "passwordAlreadyExists": "Этот пароль уже занят.",
+    "passwordNotMatch": "Введенные пароли не совпадают",
+    "newPasswordIsRequired": "Требуется новый пароль",
+    "currentPasswordIsRequired": "Требуется текущий пароль",
+    "confirmPasswordIsRequired": "Требуется подтверждение пароля"
+  },
+  "myOrders": {
+    "title": "Мои заказы",
+    "order": "Заказ",
+    "date": "Дата",
+    "status": "Статус",
+    "total": "Итого",
+    "completed": "завершено"
+  },
+  "instructorScreen": {
+    "title": "Инструктор",
+    "countCourse": "{count} курсов",
+    "countStudent": "{count} студентов"
+  },
+  "singleCourse": {
+    "title": "Курс",
+    "overview": "Обзор",
+    "curriculum": "Программа",
+    "curriculumEmpty": "Программа пуста",
+    "instructor": "Инструктор",
+    "review": "Отзывы",
+    "rating": "рейтинг",
+    "leaveAReview": "Оставить отзыв",
+    "leaveAReviewDescription": "Пожалуйста, предоставьте как можно больше подробностей.",
+    "reviewTitle": "Заголовок",
+    "reviewTitleEmpty": "Пожалуйста, введите заголовок отзыва",
+    "reviewContentEmpty": "Пожалуйста, введите содержание отзыва",
+    "reviewRating": "Рейтинг",
+    "reviewContent": "Содержание",
+    "reviewSubmit": "Отправить отзыв",
+    "btnContinue": "Продолжить",
+    "btnStartNow": "Начать сейчас",
+    "btnAddToCart": "В корзину",
+    "btnRestore": "Восстановить",
+    "btnRetake": "Пересдать",
+    "retakeNotice": "Успешно обновлено",
+    "passed": "Пройден",
+    "failed": "Не пройден",
+    "finished": "Завершен",
+    "average": "Средний:",
+    "purchaseNotCompleted": "Ваша покупка не была завершена, попробуйте позже",
+    "restoreCourseNotPurchase": "Вы не можете восстановить этот курс",
+    "showAllReview": "Показать все"
+  },
+  "forgot": {
+    "title": "Забыли пароль",
+    "description": "Пожалуйста, введите ваш email. Вы получите код для создания нового пароля",
+    "emailPlaceholder": "Ваш email",
+    "btnSubmit": "Сбросить пароль"
+  },
+  "learningScreen": {
+    "finishCourse": "Завершить курс",
+    "finishCourseAlert": {
+      "title": "Завершить курс",
+      "description": "Вы уверены, что хотите завершить этот курс?",
+      "cancel": "Отмена",
+      "ok": "ОК"
+    },
+    "lesson": {
+      "btnComplete": "Завершить",
+      "notificationLessonSuccess": "Поздравляем! Вы успешно завершили урок.",
+      "alert": {
+        "title": "Завершено",
+        "ok": "ОК"
+      }
+    },
+    "quiz": {
+      "questionCount": "Вопросы:",
+      "passingGrade": "Проходной балл:",
+      "btnStart": "Начать",
+      "result": {
+        "title": "Ваш результат",
+        "failed": "Вы не прошли тест. Результат {{result}}% (требуется {{grade}})",
+        "questions": "Вопросы",
+        "correct": "Правильно",
+        "wrong": "Неправильно",
+        "skipped": "Пропущено",
+        "points": "Баллы",
+        "timespent": "Затраченное время",
+        "btnRetake": "Пересдать",
+        "btnRetakeUnlimited": "Безлимитно",
+        "btnReview": "Обзор"
+      },
+      "timeRemaining": "осталось",
+      "correct": "Правильно",
+      "inCorrect": "Неправильно",
+      "point": "балл",
+      "pointResult": "{}/1 балл",
+      "explanation": "Объяснение",
+      "btnCheck": "Проверить",
+      "checkAlert": "Пожалуйста, сначала ответьте на вопросы",
+      "questionAnswered": "Вопрос отвечен",
+      "btnFinish": "Завершить",
+      "nextQuestion": "Вы ответили на все вопросы. Вы можете просмотреть или нажать Завершить",
+      "hint": "Подсказка",
+      "hintEmpty": "Подсказки нет"
+    },
+    "assignment": {
+      "title": "Задание",
+      "acceptAllowed": "Допустимые попытки",
+      "durations": "Продолжительность ",
+      "passingGrade": "Проходной балл",
+      "point": "{{point}} балл(ов)",
+      "start": "Начать",
+      "timeRemaining": "Оставшееся время",
+      "overview": "Обзор:",
+      "contentTitle": "Зачем это использовать?",
+      "attachmentFile": "Прикрепленный файл:",
+      "answer": "Ответ:",
+      "chooseFile": "Выбрать файлы",
+      "nofile": "Файл не выбран",
+      "chooseFileDescription": "(Максимальное количество файлов: {{files_amount}}. Разрешенные типы: {{allow_file_type}})",
+      "save": "СОХРАНИТЬ",
+      "send": "ОТПРАВИТЬ",
+      "yourResult": "Ваш результат:",
+      "attachments": "Вложения:",
+      "missingAttachment": "Вложение отсутствует",
+      "missingAttachments": "Вложения отсутствуют",
+      "yourAnswer": "Ваш ответ:",
+      "yourUploadedFiles": "Загруженные файлы:",
+      "instructorMessage": "Сообщение инструктора:",
+      "references": "Ссылки:",
+      "messageSaveAssignment": "Прогресс сохранен! Файлы успешно загружены!",
+      "resultPassed": "Пройден",
+      "resultFailed": "Не пройден",
+      "btnRetake": "Пересдать ({{count}})",
+      "deleteFileTitle": "Удалить файл",
+      "deleteFileMessage": "Вы уверены, что хотите удалить этот файл?",
+      "deleteFileSuccessMessage": "Файл успешно удален",
+      "cancel": "Отмена",
+      "ok": "ОК",
+      "notificationSuccess": "Ваша работа отправлена инструкторам, ожидайте результата!"
+    }
+  },
+  "notification": {
+    "title": "Уведомления",
+    "empty": "Нет уведомлений",
+    "error": "Ошибка при получении уведомлений"
+  },
+  "reviews": {
+    "title": "Отзывы",
+    "empty": "Нет отзывов",
+    "error": "Ошибка при получении отзывов"
+  },
+  "reviewQuiz": {
+    "status": {
+      "success": "Правильно",
+      "failed": "Неправильно"
+    },
+    "failed": "Не пройден",
+    "success": "Успех",
+    "graduation": "Вы не прошли тест. Результат {}% (требуется {})"
+  },
+  "language": "Язык",
+  "changeLanguageSuccess": "Язык успешно обновлен.",
+  "error": "Ошибка",
+  "loading": "Загрузка...",
+  "weeks": "недель",
+  "days": "дней",
+  "hour": "час",
+  "minutes": "минут",
+  "active": {
+    "lpWishlist": "Пожалуйста, активируйте плагин LearnPress- Course Wishlist!"
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "295501493480",
+    "project_id": "dcplatforma",
+    "storage_bucket": "dcplatforma.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:295501493480:android:6f70e6e55cf28061d6855d",
+        "android_client_info": {
+          "package_name": "com.dcplatforma.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "295501493480-0pcv8hsp8vqskrkv5e7h4nt88o05jjro.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dcplatforma.app",
+            "certificate_hash": "500d6c8d98c4f908aa4bdb0597e120ac5d8c2835"
+          }
+        },
+        {
+          "client_id": "295501493480-4o60ogh7leo0phjv42fums35ennt701b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dcplatforma.app",
+            "certificate_hash": "97062c3ccc266b4a0888f8369657311fcdc8f7eb"
+          }
+        },
+        {
+          "client_id": "295501493480-qs81gis5ib05eloqbopi79761smi0irm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYogB6HGSUsVmZ97oNryV6SHFPbAm_DoA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "295501493480-qs81gis5ib05eloqbopi79761smi0irm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "295501493480-6j2oui1jddtmoq1o009nm8a79geilhh8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.sholpan.app"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:295501493480:android:09551d853ad4d7bed6855d",
+        "android_client_info": {
+          "package_name": "com.sholpan.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "295501493480-qs81gis5ib05eloqbopi79761smi0irm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYogB6HGSUsVmZ97oNryV6SHFPbAm_DoA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "295501493480-qs81gis5ib05eloqbopi79761smi0irm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "295501493480-6j2oui1jddtmoq1o009nm8a79geilhh8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.sholpan.app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

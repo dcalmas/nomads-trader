@@ -1,0 +1,10 @@
+import 'package:get/get.dart';
+
+class ForgotPasswordBinding extends Bindings {
+  @override
+  void dependencies() async {
+    // Get.lazyPut(
+    //   () => LoginController(parser: Get.find()),
+    // );
+  }
+}

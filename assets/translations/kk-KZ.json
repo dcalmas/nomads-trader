@@ -1,0 +1,302 @@
+{
+  "login": "Кіру",
+  "register": "Тіркелу",
+  "logout": "Шығу",
+  "lesson": "Сабақ",
+  "course": "Курс",
+  "quiz": "Тест",
+  "assignment": "Тапсырма",
+  "instructor": "Нұсқаушы",
+  "dataNotFound": "Мәлімет табылмады",
+  "needLogin": "Бұл мазмұнға қол жеткізу үшін жүйеге кіруіңіз керек",
+  "free": "ТЕГІН",
+  "sale": "ЖЕҢІЛДІК",
+  "durations": "Ұзақтығы: ",
+  "alert": {
+    "logoutTxt": "Шынымен шыққыңыз келе ме?",
+    "ok": "Иә",
+    "cancel": "Болдырмау",
+    "notLoggedIn": "Жүйеге кірмегенсіз",
+    "loggedIn": "Жалғастыру үшін жүйеге кіріңіз.",
+    "btnLogin": "Кіру",
+    "restorePurchases": "Сатып алуларды қалпына келтіру",
+    "restorePurchasesSuccess": "Сатып алулар сәтті қалпына келтірілді",
+    "restorePurchasesError": "Бұл курсты қалпына келтіре алмайсыз"
+  },
+  "bottomNavigation": {
+    "home": "Басты бет",
+    "courses": "Курстар",
+    "myCourse": "Менің курстарым",
+    "wishlist": "Таңдаулы",
+    "profile": "Профиль"
+  },
+  "loginScreen": {
+    "title": "Аккаунтыңызға кіріңіз",
+    "usernamePlaceholder": "Пайдаланушы аты",
+    "passwordPlaceholder": "Құпия сөз",
+    "btnLogin": "Кіру",
+    "forgotPassword": "Құпия сөзді ұмыттыңыз ба?",
+    "registerText": "Аккаунтыңыз жоқ па?",
+    "register": "Тіркелу",
+    "usernameEmpty": "Пайдаланушы атын енгізіңіз",
+    "passwordEmpty": "Құпия сөзді енгізіңіз",
+    "usernameNotCorrect": "Пайдаланушы аты қате",
+    "passwordNotCorrect": "Құпия сөз қате",
+    "notFound": "Табылмады"
+  },
+  "registerScreen": {
+    "title": "Тіркелгі жасау",
+    "usernamePlaceholder": "Пайдаланушы аты",
+    "emailPlaceholder": "Email",
+    "passwordPlaceholder": "Құпия сөз",
+    "confirmPasswordPlaceholder": "Құпия сөзді растау",
+    "termAndCondition": "Мен ережелермен және шарттармен келісемін",
+    "btnSubmit": "Тіркелу",
+    "usernameEmpty": "Пайдаланушы аты қажет",
+    "emailEmpty": "Email қажет",
+    "validEmail": "Email қате",
+    "passwordEmpty": "Құпия сөз қажет",
+    "confirmPasswordEmpty": "Құпия сөзді растау қажет",
+    "incorrectPassword": "Құпия сөздер сәйкес келмейді!",
+    "termAndConditionEmpty": "Сіз ережелермен келісуіңіз керек"
+  },
+  "home": {
+    "overview": {
+      "title": "Соңғы курстарыңыз",
+      "section": "Бөлім",
+      "sections": "Бөлімдер"
+    },
+    "category": "Сәлем, бүгін не үйренгіңіз келеді?",
+    "popular": "Танымал курстар",
+    "new": "Жаңа курстар",
+    "countCourse": "Курстар",
+    "countStudent": "Студенттер"
+  },
+  "courses": {
+    "title": "Курстар",
+    "searching": "Іздеу",
+    "filters": {
+      "filter": "Сүзгі",
+      "default": "Әдепкі",
+      "title": "Атауы",
+      "sale": "Жеңілдік",
+      "popular": "Танымал",
+      "newest": "Ең жаңа",
+      "oldest": "Ең ескі"
+    }
+  },
+  "searchScreen": {
+    "placeholder": "Іздеу...",
+    "title": "Соңғы іздеулер"
+  },
+  "myCourse": {
+    "title": "Менің курстарым",
+    "filters": {
+      "filter": "Сүзгі",
+      "all": "Барлығы",
+      "passed": "Өтті",
+      "inProgress": "Жалғасуда",
+      "failed": "Өтпеді"
+    }
+  },
+  "wishlist": {
+    "title": "Менің таңдаулыларым"
+  },
+  "profile": {
+    "title": "Профиль",
+    "version": "Нұсқа: {} - Build: {}"
+  },
+  "settings": {
+    "title": "Баптаулар",
+    "general": "Жалпы",
+    "password": "Құпия сөз",
+    "deleteAccount": "Аккаунтты өшіру",
+    "upload": "Жүктеу",
+    "update": "Жаңарту",
+    "bio": "Өзім туралы",
+    "firstName": "Аты",
+    "lastName": "Жөні",
+    "nickName": "Никнейм",
+    "save": "Өзгерістерді сақтау",
+    "currentPassword": "Қазіргі құпия сөз",
+    "newPassword": "Жаңа құпия сөз",
+    "confirmNewPassword": "Жаңа құпия сөзді растау",
+    "deleteAccountTitle": "Аккаунтты өшіргіңіз келетініне сенімдісіз бе?",
+    "deleteAccountTitle2": "Аккаунт",
+    "deleteAccountContent": "Сіздің аккаунтыңыз базадан өшіріледі. Барлық курстар жойылады.",
+    "deleteAccountContent2": "Растау үшін құпия сөзді енгізіңіз:",
+    "deleteAccountBtn": "Өшіру",
+    "chooseFrom": "Таңдау",
+    "camera": "Камера",
+    "gallery": "Галерея",
+    "cancel": "Болдырмау",
+    "passwordAlreadyExists": "Бұл құпия сөз бұрын қолданылған.",
+    "passwordNotMatch": "Құпия сөздер сәйкес келмейді",
+    "newPasswordIsRequired": "Жаңа құпия сөз қажет",
+    "currentPasswordIsRequired": "Қазіргі құпия сөз қажет",
+    "confirmPasswordIsRequired": "Құпия сөзді растау қажет"
+  },
+  "myOrders": {
+    "title": "Менің тапсырыстарым",
+    "order": "Тапсырыс",
+    "date": "Күні",
+    "status": "Күйі",
+    "total": "Жиыны",
+    "completed": "Аяқталды"
+  },
+  "instructorScreen": {
+    "title": "Нұсқаушы",
+    "countCourse": "{count} курс",
+    "countStudent": "{count} студент"
+  },
+  "singleCourse": {
+    "title": "Курс туралы",
+    "overview": "Шолу",
+    "curriculum": "Оқу жоспары",
+    "curriculumEmpty": "Оқу жоспары бос",
+    "instructor": "Нұсқаушы",
+    "review": "Пікірлер",
+    "rating": "рейтинг",
+    "leaveAReview": "Пікір қалдыру",
+    "leaveAReviewDescription": "Басқаларға көмектесу үшін толығырақ ақпарат беріңіз.",
+    "reviewTitle": "Тақырып",
+    "reviewTitleEmpty": "Пікір тақырыбын енгізіңіз",
+    "reviewContentEmpty": "Пікір мазмұнын енгізіңіз",
+    "reviewRating": "Рейтинг",
+    "reviewContent": "Мазмұны",
+    "reviewSubmit": "Пікірді жіберу",
+    "btnContinue": "Жалғастыру",
+    "btnStartNow": "Қазір бастау",
+    "btnAddToCart": "Себетке қосу",
+    "btnRestore": "Қалпына келтіру",
+    "btnRetake": "Қайта тапсыру",
+    "retakeNotice": "Сәтті жаңартылды",
+    "passed": "Өтті",
+    "failed": "Өтпеді",
+    "finished": "Аяқталды",
+    "average": "Орташа:",
+    "purchaseNotCompleted": "Сатып алу аяқталмады, қайталап көріңіз",
+    "restoreCourseNotPurchase": "Бұл курсты қалпына келтіре алмайсыз",
+    "showAllReview": "Барлығын көрсету"
+  },
+  "forgot": {
+    "title": "Құпия сөзді ұмыттыңыз ба?",
+    "description": "Электрондық поштаңызды енгізіңіз. Сізге жаңа құпия сөз жасау коды келеді",
+    "emailPlaceholder": "Электрондық пошта",
+    "btnSubmit": "Құпия сөзді ауыстыру"
+  },
+  "learningScreen": {
+    "finishCourse": "Курсты аяқтау",
+    "finishCourseAlert": {
+      "title": "Курсты аяқтау",
+      "description": "Курсты аяқтағыңыз келетініне сенімдісіз бе?",
+      "cancel": "Болдырмау",
+      "ok": "Иә"
+    },
+    "lesson": {
+      "btnComplete": "Аяқтау",
+      "notificationLessonSuccess": "Құттықтаймыз! Сіз сабақты аяқтадыңыз.",
+      "alert": {
+        "title": "Аяқталды",
+        "ok": "Иә"
+      }
+    },
+    "quiz": {
+      "questionCount": "Сұрақтар саны:",
+      "passingGrade": "Өту балы:",
+      "btnStart": "Бастау",
+      "result": {
+        "title": "Сіздің нәтижеңіз",
+        "failed": "Сіз тесттен өтпедіңіз. Нәтиже {{result}}% (талап етілетіні {{grade}})",
+        "questions": "Сұрақтар",
+        "correct": "Дұрыс",
+        "wrong": "Қате",
+        "skipped": "Өткізілген",
+        "points": "Ұпайлар",
+        "timespent": "Жұмсалған уақыт",
+        "btnRetake": "Қайта тапсыру",
+        "btnRetakeUnlimited": "Шектеусіз",
+        "btnReview": "Шолу"
+      },
+      "timeRemaining": "қалды",
+      "correct": "Дұрыс",
+      "inCorrect": "Қате",
+      "point": "ұпай",
+      "pointResult": "{}/1 ұпай",
+      "explanation": "Түсіндірме",
+      "btnCheck": "Тексеру",
+      "checkAlert": "Алдымен сұрақтарға жауап беріңіз",
+      "questionAnswered": "Сұраққа жауап берілді",
+      "btnFinish": "Аяқтау",
+      "nextQuestion": "Барлық сұрақтарға жауап бердіңіз. Тексере аласыз немесе Аяқтау батырмасын басыңыз",
+      "hint": "Көмек",
+      "hintEmpty": "Көмек жоқ"
+    },
+    "assignment": {
+      "title": "Тапсырма",
+      "acceptAllowed": "Рұқсат етілген талпыныстар",
+      "durations": "Ұзақтығы ",
+      "passingGrade": "Өту балы",
+      "point": "{{point}} ұпай",
+      "start": "Бастау",
+      "timeRemaining": "Уақыт қалды",
+      "overview": "Шолу:",
+      "contentTitle": "Бұл не үшін керек?",
+      "attachmentFile": "Тіркелген файл:",
+      "answer": "Жауап:",
+      "chooseFile": "Файлдарды таңдау",
+      "nofile": "Файл таңдалмады",
+      "chooseFileDescription": "(Ең көп жүктеуге болатын файл саны: {{files_amount}}. Рұқсат етілген түрлері: {{allow_file_type}})",
+      "save": "САҚТАУ",
+      "send": "ЖІБЕРУ",
+      "yourResult": "Сіздің нәтижеңіз:",
+      "attachments": "Тіркемелер:",
+      "missingAttachment": "Тіркеме жоқ",
+      "missingAttachments": "Тіркемелер жоқ",
+      "yourAnswer": "Сіздің жауабыңыз:",
+      "yourUploadedFiles": "Жүктелген файлдарыңыз:",
+      "instructorMessage": "Нұсқаушы хабарламасы:",
+      "references": "Сілтемелер:",
+      "messageSaveAssignment": "Прогресс сақталды! Файлдарыңыз сәтті жүктелді!",
+      "resultPassed": "Өтті",
+      "resultFailed": "Өтпеді",
+      "btnRetake": "Қайта тапсыру ({{count}})",
+      "deleteFileTitle": "Файлды өшіру",
+      "deleteFileMessage": "Бұл файлды өшіргіңіз келетініне сенімдісіз бе?",
+      "deleteFileSuccessMessage": "Файл сәтті өшірілді",
+      "cancel": "Болдырмау",
+      "ok": "Иә",
+      "notificationSuccess": "Сіздің жұмысыңыз нұсқаушыға жіберілді, нәтижесін күтіңіз!"
+    }
+  },
+  "notification": {
+    "title": "Хабарламалар",
+    "empty": "Хабарламалар жоқ",
+    "error": "Хабарламаларды алу кезінде қате кетті"
+  },
+  "reviews": {
+    "title": "Пікірлер",
+    "empty": "Пікірлер жоқ",
+    "error": "Пікірлерді алу кезінде қате кетті"
+  },
+  "reviewQuiz": {
+    "status": {
+      "success": "Дұрыс",
+      "failed": "Қате"
+    },
+    "failed": "Өтпеді",
+    "success": "Сәтті",
+    "graduation": "Сіз тесттен өтпедіңіз. Нәтиже {}% (талап етілетіні {})"
+  },
+  "language": "Тіл",
+  "changeLanguageSuccess": "Тіл сәтті жаңартылды.",
+  "error": "Қате",
+  "loading": "Жүктелуде...",
+  "weeks": "апта",
+  "days": "күн",
+  "hour": "сағат",
+  "minutes": "минут",
+  "active": {
+    "lpWishlist": "LearnPress- Course Wishlist плагинін белсендіріңіз!"
+  }
+}

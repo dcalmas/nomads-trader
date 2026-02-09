@@ -1,0 +1,16 @@
+VERSION 1.2.0:
+- Compatible with Dart 3.5.0.
+- Compatible with Eduma 5.5.4
+- Fix course lesson add audio
+- Fix some error.
+VERSION 1.3.0:
+### Fixed
+- Firebase dependencies version conflict
+- Fix Android build error.
+- Fix some error.
+### Changed
+- Upgrade Firebase BOM to 33.0.0
+- Update firebase_messaging to 15.2.0
+### Added
+- Firebase Messaging service in AndroidManifest
+- MultiDex support for old Android APIs

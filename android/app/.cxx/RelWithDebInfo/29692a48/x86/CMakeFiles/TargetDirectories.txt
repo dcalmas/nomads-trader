@@ -1,0 +1,2 @@
+/Users/vuhoang/Desktop/mobile-app/main-chinh-ko-dong/flutter/v2/lp-mobile-flutter/android/app/.cxx/RelWithDebInfo/29692a48/x86/CMakeFiles/edit_cache.dir
+/Users/vuhoang/Desktop/mobile-app/main-chinh-ko-dong/flutter/v2/lp-mobile-flutter/android/app/.cxx/RelWithDebInfo/29692a48/x86/CMakeFiles/rebuild_cache.dir

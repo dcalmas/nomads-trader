@@ -1,0 +1,99 @@
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+    def keystoreProperties = new Properties()
+    def keystorePropertiesFile = rootProject.file('key.properties')
+    if (keystorePropertiesFile.exists()) {
+        keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+    }
+
+
+    // def flutterRoot = localProperties.getProperty('flutter.sdk')
+    // if (flutterRoot == null) {
+    //     throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.") as Throwable
+    // }
+
+    def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
+    if (flutterVersionCode == null) {
+        flutterVersionCode = '1'
+    }
+
+    def flutterVersionName = localProperties.getProperty('flutter.versionName')
+    if (flutterVersionName == null) {
+        flutterVersionName = '1.0.0'
+    }
+
+    apply plugin: 'com.android.application'
+    apply plugin: 'kotlin-android'
+    apply plugin: 'dev.flutter.flutter-gradle-plugin'
+    // apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+
+    android {
+        namespace 'com.sholpan.app'
+        compileSdkVersion 36
+        ndkVersion flutter.ndkVersion
+
+        configurations.all {
+            resolutionStrategy {
+                force 'androidx.core:core:1.13.1'
+                force 'androidx.core:core-ktx:1.13.1'
+            }
+        }
+
+        compileOptions {
+            coreLibraryDesugaringEnabled true
+            sourceCompatibility JavaVersion.VERSION_17
+            targetCompatibility JavaVersion.VERSION_17
+        }
+
+        kotlinOptions {
+            jvmTarget = '17'
+        }
+
+        sourceSets {
+            main.java.srcDirs += 'src/main/kotlin'
+        }
+
+        defaultConfig {
+            applicationId "com.sholpan.app"
+            minSdkVersion flutter.minSdkVersion
+            targetSdkVersion 36
+            versionCode flutterVersionCode.toInteger()
+            versionName flutterVersionName
+            missingDimensionStrategy 'store', 'play'
+            multiDexEnabled true
+        }
+
+        signingConfigs {
+            release {
+                storeFile file('your_keystore_file.jks')
+                storePassword 'your_store_password'
+                keyAlias 'your_key_alias'
+                keyPassword 'your_key_password'
+            }
+        }
+        buildTypes {
+            release {
+                signingConfig signingConfigs.release
+            }
+        }
+        lintOptions {
+            disable 'InvalidPackage'
+            abortOnError false
+        }
+    }
+}
+flutter {
+    source '../..'
+}
+
+dependencies {
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$rootProject.ext.kotlin_version"
+    implementation 'androidx.core:core-ktx:1.13.1'
+    implementation 'com.android.billingclient:billing:6.2.1'
+    implementation 'com.android.support:multidex:2.0.1'
+}
