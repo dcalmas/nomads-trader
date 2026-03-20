@@ -13,13 +13,13 @@ class HomeParser {
   HomeParser(
       {required this.apiService, required this.sharedPreferencesManager});
 
-  Future<Response> getTopCourses() async {
-    var response = await apiService.getPublic(AppConstants.getTopCourses, null);
+  Future<Response> getTopCourses(dynamic param) async {
+    var response = await apiService.getPublic(AppConstants.getTopCourses, param);
     return response;
   }
 
-  Future<Response> getNewCourses() async {
-    var response = await apiService.getPublic(AppConstants.getNewCourses, null);
+  Future<Response> getNewCourses(dynamic param) async {
+    var response = await apiService.getPublic(AppConstants.getNewCourses, param);
     return response;
   }
 

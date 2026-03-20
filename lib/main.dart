@@ -74,7 +74,7 @@ Future<void> main() async {
           Locale('ru', 'RU'),
           Locale('en', 'US'),
         ],
-        fallbackLocale: const Locale('kk', 'KZ'),
+        fallbackLocale: const Locale('ru', 'RU'), // Изменено на ru
         path: 'assets/translations',
         child: MultiProvider(
           providers: [
@@ -109,7 +109,7 @@ class _MyAppState extends State<MyApp> {
     final languageController = Get.find<LanguageController>();
 
     final key =
-        languageController.sharedPreferencesManager.getString("language") ?? 'kk';
+        languageController.sharedPreferencesManager.getString("language") ?? 'ru'; // Изменено на ru
 
     final currentLanguage = languageController.handleChoiceLanguage(key);
     final currentLocale = Locale(

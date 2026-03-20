@@ -84,7 +84,10 @@ class HomeController extends GetxController implements GetxService {
   }
 
   Future<void> getTopCourses() async {
-    Response response = await parser.getTopCourses();
+    var param = {
+      "_t": DateTime.now().millisecondsSinceEpoch.toString(),
+    };
+    Response response = await parser.getTopCourses(param);
     apiCalled = true;
 
     if (response.statusCode == 200) {
@@ -98,7 +101,10 @@ class HomeController extends GetxController implements GetxService {
   }
 
   Future<void> getNewCourses() async {
-    Response response = await parser.getNewCourses();
+    var param = {
+      "_t": DateTime.now().millisecondsSinceEpoch.toString(),
+    };
+    Response response = await parser.getNewCourses(param);
     apiCalled = true;
 
     if (response.statusCode == 200) {
