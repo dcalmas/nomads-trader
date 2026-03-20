@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/app/backend/mobx-store/session_store.dart';
 import 'package:flutter_app/app/backend/parse/my_profile_parse.dart';
 import 'package:flutter_app/app/helper/router.dart';
 import 'package:flutter_app/l10n/locale_keys.g.dart';
@@ -32,6 +33,8 @@ class Profile extends StatefulWidget {
 }
 
 class _Profile extends State<Profile> {
+  final SessionStore sessionStore = Get.find<SessionStore>();
+
   @override
   void initState() {
     String? user = widget.myProfileParser.getUserInfo();
@@ -46,6 +49,187 @@ class _Profile extends State<Profile> {
     Future.delayed(Duration.zero, () {
       Get.toNamed(AppRouter.getLoginRoute());
     });
+  }
+
+  // Reusable requireAuth wrapper
+  void requireAuth(VoidCallback action) {
+    final isAuthorized = widget.myProfileParser.getToken() != '';
+    if (isAuthorized) {
+      action();
+    } else {
+      _showLoginRequiredDialog();
+    }
+  }
+
+  // Login required dialog
+  void _showLoginRequiredDialog() {
+    Get.dialog(
+      Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        backgroundColor: Colors.white,
+        child: Container(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Icon
+              Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  color: const Color(0xFF4A6CF7),
+                ),
+                child: const Icon(
+                  Icons.info_outline,
+                  size: 32,
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(height: 16),
+              // Text
+              Text(
+                "Пожалуйста, авторизуйтесь, чтобы продолжить",
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                ),
+              ),
+              const SizedBox(height: 24),
+              // Button
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Get.back(); // Close dialog
+                    onLogin(); // Open login screen
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFFFF9500),
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  child: const Text(
+                    "Войти",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // Logout confirmation dialog
+  void _showLogoutConfirmationDialog() {
+    Get.dialog(
+      Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        backgroundColor: Colors.white,
+        child: Container(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                "Вы уверены?",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black,
+                ),
+              ),
+              const SizedBox(height: 16),
+              Text(
+                "Вы действительно хотите выйти из аккаунта?",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey.shade600,
+                ),
+              ),
+              const SizedBox(height: 24),
+              Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton(
+                      onPressed: () {
+                        Get.back(); // Close dialog
+                      },
+                      style: OutlinedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      child: const Text(
+                        "Отмена",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Get.back(); // Close dialog
+                        _logout(); // Perform logout
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFFFF3B30),
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      child: const Text(
+                        "Шығу",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // Logout function
+  void _logout() {
+    // Clear session/token
+    sessionStore.logout();
+    
+    // Refresh UI
+    setState(() {});
+    
+    // Debug log to check if token is cleared
+    print('Token after logout: ${widget.myProfileParser.getToken()}');
+    
+    // Navigate to login screen
+    Get.offAllNamed(AppRouter.getLoginRoute());
   }
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -192,23 +376,23 @@ class _Profile extends State<Profile> {
           ),
           // Settings list
           Expanded(
-            child: ListView(
+            child:            ListView(
               children: [
                 // General settings
                 _buildSettingsItem(
                   icon: Feather.settings,
                   title: tr(LocaleKeys.settings_general),
                   iconColor: const Color(0xFF4A6CF7),
-                  onTap: () => Get.toNamed(AppRouter.general),
+                  onTap: () => requireAuth(() => Get.toNamed(AppRouter.general)),
                 ),
                 // Password settings
                 _buildSettingsItem(
                   icon: Feather.lock,
                   title: tr(LocaleKeys.settings_password),
                   iconColor: const Color(0xFF4A6CF7),
-                  onTap: () => Get.toNamed(AppRouter.password),
+                  onTap: () => requireAuth(() => Get.toNamed(AppRouter.password)),
                 ),
-                // Language settings
+                // Language settings (accessible to guests)
                 _buildSettingsItem(
                   icon: Ionicons.language,
                   title: tr(LocaleKeys.language),
@@ -220,8 +404,16 @@ class _Profile extends State<Profile> {
                   icon: Feather.trash_2,
                   title: tr(LocaleKeys.settings_deleteAccount),
                   iconColor: const Color(0xFF4A6CF7),
-                  onTap: () => Get.toNamed(AppRouter.delete),
+                  onTap: () => requireAuth(() => Get.toNamed(AppRouter.delete)),
                 ),
+                // Logout option (only visible to authorized users)
+                if (isAuthorized)
+                  _buildSettingsItem(
+                    icon: Feather.log_out,
+                    title: "Шығу",
+                    iconColor: const Color(0xFFFF3B30),
+                    onTap: _showLogoutConfirmationDialog,
+                  ),
               ],
             ),
           ),

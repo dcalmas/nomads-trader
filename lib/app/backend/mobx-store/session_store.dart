@@ -82,10 +82,23 @@ abstract class _SessionStore with Store {
     return sharedPreferencesManager!.getString('overview') ?? "";
   }
   
-  String getFcmToken(){
+   String getFcmToken(){
     if (sharedPreferencesManager == null) {
       return "";
     }
     return sharedPreferencesManager!.getString('fcm_token') ?? "";
+  }
+  
+  @action
+  void logout() {
+    // Clear in-memory state
+    token = "";
+    userInfo = null;
+    
+    // Clear from storage
+    if (sharedPreferencesManager != null) {
+      sharedPreferencesManager!.clearAll();
+      print('SessionStore: All preferences cleared');
+    }
   }
 }

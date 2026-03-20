@@ -223,17 +223,17 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                       children: [
                         const Spacer(),
 
-                        // Orb + logo + liquid effect
+                        // ✅ 3D Orb + logo + liquid effect
                         Transform.translate(
                           offset: Offset(0, _sin(t) * 6),
                           child: Opacity(
                             opacity: orbOpacity.clamp(0.0, 1.0),
                             child: Transform.scale(
                               scale: orbScale,
-                              child: _LiquidGlassOrb(
+                              child: _LiquidGlassOrb3D(
                                 t: t,
                                 blurSigma: orbBlur,
-                                logo: _buildLogo(t),
+                                logo: _buildLogo3D(t),
                               ),
                             ),
                           ),
@@ -311,21 +311,49 @@ class _WelcomeScreenState extends State<WelcomeScreen>
     );
   }
 
-  Widget _buildLogo(double t) {
-    // Slight pulse
-    final scale = 0.98 + 0.04 * (0.5 + 0.5 * _sin(t * 1.2));
-    return Transform.scale(
-      scale: scale,
+  // ✅ 3D LOGO with full rotation and perspective
+  Widget _buildLogo3D(double t) {
+    // 3D rotation angles
+    final rotationY = t * math.pi * 2; // Full Y-axis rotation (360°)
+    final rotationX = _sin(t) * 0.25; // Subtle X tilt for depth
+    final rotationZ = _cos(t * 0.8) * 0.1; // Very slight Z wobble
+
+    // Breathing scale
+    final scale = 0.97 + 0.06 * (0.5 + 0.5 * _sin(t * 1.3));
+
+    return Transform(
+      alignment: Alignment.center,
+      transform: Matrix4.identity()
+        ..setEntry(3, 2, 0.0015) // Perspective depth (lower = more dramatic)
+        ..rotateY(rotationY) // Main 3D spin around Y-axis
+        ..rotateX(rotationX) // Tilt for realism
+        ..rotateZ(rotationZ) // Subtle wobble
+        ..scale(scale), // Breathing pulse
       child: Image.asset(
         'assets/images/logo_white.png',
         width: 74,
         height: 74,
         fit: BoxFit.contain,
         // ✅ Қызыл X шықпасын: fallback
-        errorBuilder: (_, __, ___) => const Icon(
-          Icons.school_rounded,
-          size: 62,
-          color: Colors.white,
+        errorBuilder: (_, __, ___) => Container(
+          width: 74,
+          height: 74,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Colors.cyan.shade300,
+                Colors.blue.shade400,
+              ],
+            ),
+          ),
+          child: const Icon(
+            Icons.school_rounded,
+            size: 42,
+            color: Colors.white,
+          ),
         ),
       ),
     );
@@ -335,13 +363,13 @@ class _WelcomeScreenState extends State<WelcomeScreen>
   double _cos(double t) => math.cos(t * math.pi * 2);
 }
 
-/// ✅ Liquid Glass Orb (multi-layer, refraction, rotating highlights)
-class _LiquidGlassOrb extends StatelessWidget {
+/// ✅ 3D Liquid Glass Orb (enhanced with depth layers)
+class _LiquidGlassOrb3D extends StatelessWidget {
   final double t; // 0..1
   final double blurSigma;
   final Widget logo;
 
-  const _LiquidGlassOrb({
+  const _LiquidGlassOrb3D({
     required this.t,
     required this.blurSigma,
     required this.logo,
@@ -350,124 +378,164 @@ class _LiquidGlassOrb extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final glow = 0.10 + 0.12 * (0.5 + 0.5 * math.sin(t * math.pi * 2));
-    final rot1 = t * math.pi * 2;
-    final rot2 = -t * math.pi * 2 * 0.75;
+    final rot1 = t * math.pi * 2; // Primary rotation
+    final rot2 = -t * math.pi * 2 * 0.75; // Counter rotation
+    final rot3 = t * math.pi * 2 * 1.3; // Faster highlight
 
-    return Container(
-      width: 178,
-      height: 178,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.white.withOpacity(0.10 + glow),
-            blurRadius: 60,
-            spreadRadius: 8,
-          ),
-          BoxShadow(
-            color: Colors.black.withOpacity(0.32),
-            blurRadius: 28,
-            offset: const Offset(0, 18),
-          ),
-        ],
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(999),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: blurSigma, sigmaY: blurSigma),
-          child: Stack(
-            alignment: Alignment.center,
-            children: [
-              // Base glass fill
-              Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.white.withOpacity(0.10 + glow),
-                  border: Border.all(
-                    color: Colors.white.withOpacity(0.22),
-                    width: 1,
+    // 3D depth simulation with scale variation
+    final depthScale = 0.98 + 0.04 * (0.5 + 0.5 * math.sin(t * math.pi));
+
+    return Transform.scale(
+      scale: depthScale,
+      child: Container(
+        width: 178,
+        height: 178,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.white.withOpacity(0.10 + glow),
+              blurRadius: 60,
+              spreadRadius: 8,
+            ),
+            BoxShadow(
+              color: const Color(0xFF7EE6FF).withOpacity(0.20 + glow * 0.5),
+              blurRadius: 80,
+              spreadRadius: 5,
+            ),
+            BoxShadow(
+              color: Colors.black.withOpacity(0.32),
+              blurRadius: 28,
+              offset: const Offset(0, 18),
+            ),
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(999),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: blurSigma, sigmaY: blurSigma),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                // Base glass fill
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white.withOpacity(0.10 + glow),
+                    border: Border.all(
+                      color: Colors.white.withOpacity(0.22),
+                      width: 1,
+                    ),
                   ),
                 ),
-              ),
 
-              // Inner refraction layer (gives depth)
-              Positioned.fill(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(999),
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        gradient: RadialGradient(
-                          colors: [
-                            Colors.white.withOpacity(0.00),
-                            Colors.white.withOpacity(0.06 + glow),
-                            Colors.white.withOpacity(0.00),
-                          ],
-                          stops: const [0.25, 0.62, 1.0],
+                // Inner refraction layer (gives depth)
+                Positioned.fill(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(999),
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          gradient: RadialGradient(
+                            colors: [
+                              Colors.white.withOpacity(0.00),
+                              Colors.white.withOpacity(0.06 + glow),
+                              const Color(0xFF7EE6FF).withOpacity(0.04),
+                              Colors.white.withOpacity(0.00),
+                            ],
+                            stops: const [0.15, 0.45, 0.70, 1.0],
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
 
-              // Rotating highlight ring (specular)
-              Transform.rotate(
-                angle: rot1,
-                child: Container(
-                  width: 156,
-                  height: 156,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: SweepGradient(
-                      colors: [
-                        Colors.white.withOpacity(0.00),
-                        Colors.white.withOpacity(0.18 + glow),
-                        Colors.white.withOpacity(0.00),
-                      ],
-                      stops: const [0.20, 0.50, 0.80],
+                // Rotating highlight ring 1 (primary specular)
+                Transform.rotate(
+                  angle: rot1,
+                  child: Container(
+                    width: 156,
+                    height: 156,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: SweepGradient(
+                        colors: [
+                          Colors.white.withOpacity(0.00),
+                          Colors.white.withOpacity(0.22 + glow),
+                          const Color(0xFF7EE6FF).withOpacity(0.18 + glow),
+                          Colors.white.withOpacity(0.00),
+                        ],
+                        stops: const [0.15, 0.40, 0.65, 0.85],
+                      ),
                     ),
                   ),
                 ),
-              ),
 
-              // Secondary ring
-              Transform.rotate(
-                angle: rot2,
-                child: Container(
-                  width: 142,
-                  height: 142,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: SweepGradient(
-                      colors: [
-                        Colors.white.withOpacity(0.00),
-                        const Color(0xFF7EE6FF).withOpacity(0.16 + glow),
-                        Colors.white.withOpacity(0.00),
-                      ],
-                      stops: const [0.10, 0.52, 0.92],
+                // Rotating highlight ring 2 (secondary)
+                Transform.rotate(
+                  angle: rot2,
+                  child: Container(
+                    width: 142,
+                    height: 142,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: SweepGradient(
+                        colors: [
+                          Colors.white.withOpacity(0.00),
+                          const Color(0xFF7EE6FF).withOpacity(0.20 + glow),
+                          const Color(0xFF2AA9FF).withOpacity(0.12),
+                          Colors.white.withOpacity(0.00),
+                        ],
+                        stops: const [0.10, 0.45, 0.70, 0.92],
+                      ),
                     ),
                   ),
                 ),
-              ),
 
-              // Liquid highlights (moving spots)
-              Positioned(
-                top: 30,
-                left: 34,
-                child: _shine(54, 24, 0.18 + glow),
-              ),
-              Positioned(
-                bottom: 34,
-                right: 28,
-                child: _shine(64, 26, 0.12 + glow),
-              ),
+                // Fast rotating accent ring (3D depth)
+                Transform.rotate(
+                  angle: rot3,
+                  child: Container(
+                    width: 165,
+                    height: 165,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: SweepGradient(
+                        colors: [
+                          Colors.transparent,
+                          Colors.cyan.withOpacity(0.15 + glow * 0.8),
+                          Colors.transparent,
+                        ],
+                        stops: const [0.30, 0.50, 0.70],
+                      ),
+                    ),
+                  ),
+                ),
 
-              // Logo
-              logo,
-            ],
+                // Liquid highlights (moving spots)
+                Positioned(
+                  top: 30,
+                  left: 34,
+                  child: _shine(54, 24, 0.18 + glow),
+                ),
+                Positioned(
+                  bottom: 34,
+                  right: 28,
+                  child: _shine(64, 26, 0.12 + glow),
+                ),
+                Positioned(
+                  top: 50,
+                  right: 40,
+                  child: _shine(42, 20, 0.10 + glow * 0.6),
+                ),
+
+                // ✅ 3D Logo in center
+                logo,
+              ],
+            ),
           ),
         ),
       ),

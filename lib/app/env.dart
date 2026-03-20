@@ -1,8 +1,8 @@
 class Environments {
   static const String appName = 'dcapp';
   static const String companyName = 'Dcplatforma';
-  static const String apiBaseURL = 'https://app.jetoo.kz/';
-  static const String websiteURL = 'https://app.jetoo.kz/';
+  static const String apiBaseURL = 'https://nomadstrader.com/';
+  static const String websiteURL = 'https://nomadstrader.com/';
   static const String appVersion = '1.2.0';
   static const String appBuild = '10100';
   //login social
