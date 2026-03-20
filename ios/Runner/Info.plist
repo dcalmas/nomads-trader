@@ -7,7 +7,7 @@
 		<key>CFBundleDevelopmentRegion</key>
 		<string>$(DEVELOPMENT_LANGUAGE)</string>
 		<key>CFBundleDisplayName</key>
-		<string>Sholpan Landas</string>
+		<string>Nomads Trader</string>
 		<key>CFBundleExecutable</key>
 		<string>$(EXECUTABLE_NAME)</string>
 		<key>CFBundleIdentifier</key>
@@ -42,13 +42,13 @@
 			<true/>
 		</dict>
 		<key>NSCameraUsageDescription</key>
-		<string>Профиль суретін түсіріп, жүктеу үшін камераға рұқсат беріңіз.</string>
-		<key>NSMicrophoneUsageDescription</key>
-		<string>Бейне сабақтарда дыбысты қолдану үшін микрофонға рұқсат беріңіз.</string>
-		<key>NSPhotoLibraryUsageDescription</key>
-		<string>Галереядан профиль суретін таңдау үшін рұқсат беріңіз.</string>
-		<key>NSSpeechRecognitionUsageDescription</key>
-		<string>Қолданба ішінде дауыспен іздеу функциясын қолдану үшін рұқсат беріңіз.</string>
+		<string>Разрешите доступ к камере, чтобы сделать и загрузить фото профиля.</string>
+        <key>NSMicrophoneUsageDescription</key>
+        <string>Разрешите доступ к микрофону для использования звука в видеоуроках.</string>
+        <key>NSPhotoLibraryUsageDescription</key>
+        <string>Разрешите доступ к галерее, чтобы выбрать фото профиля.</string>
+        <key>NSSpeechRecognitionUsageDescription</key>
+        <string>Разрешите доступ к распознаванию речи для использования голосового поиска в приложении.</string>
 		<key>UIApplicationSupportsIndirectInputEvents</key>
 		<true/>
 		<key>UIBackgroundModes</key>
@@ -56,6 +56,8 @@
 			<string>fetch</string>
 			<string>remote-notification</string>
 		</array>
+		<key>CFBundleIconName</key>
+		<string>AppIcon</string>
 		<key>UILaunchStoryboardName</key>
 		<string>LaunchScreen</string>
 		<key>UIMainStoryboardFile</key>
