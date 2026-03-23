@@ -29,27 +29,32 @@ class LearningLesson extends StatelessWidget with GetItMixin {
               padding: EdgeInsets.symmetric(horizontal: 16,vertical: 32),
               child: Text(
                 data.name!,
+                key: ValueKey('title_${data.id}'), // Тақырыпты жаңарту үшін
                 style: TextStyle(
                     fontSize: 18,
                     fontFamily: 'medium',
                     color: Colors.black,
                     fontWeight: FontWeight.w600),
               )),
-        if (data.video_intro != null)
+        if (data.video_intro != null && data.video_intro != "")
           Container(
-              // padding: EdgeInsets.only(left: 10),
-              child: HtmlWidget( data.video_intro.toString(),textStyle: TextStyle(
+              child: HtmlWidget( 
+                data.video_intro.toString(),
+                key: ValueKey('video_intro_${data.id}'), // Видеоны мәжбүрлі түрде жаңарту үшін
+                factoryBuilder: () => MyWidgetFactory(),
+                textStyle: TextStyle(
                     fontFamily: 'Poppins-ExtraLight',
                     fontSize: 13,
                     color: Colors.black,
                     fontWeight: FontWeight.w300,
               ),
       )),
-        if (data.content != null)
+        if (data.content != null && data.content != "")
           Container(
             padding: EdgeInsets.symmetric(horizontal: 15),
             child: HtmlWidget(
               data.content.toString(),
+              key: ValueKey('content_${data.id}'), // Мазмұнды мәжбүрлі түрде жаңарту үшін
               factoryBuilder: () => MyWidgetFactory(),
               textStyle: const TextStyle(
                 fontFamily: 'Poppins',
@@ -106,7 +111,10 @@ class LearningLesson extends StatelessWidget with GetItMixin {
   }
 }
 
-class MyWidgetFactory extends WidgetFactory with WebViewFactory,JustAudioFactory {
+class MyWidgetFactory extends WidgetFactory with WebViewFactory, JustAudioFactory {
   @override
   bool get webViewMediaPlaybackAlwaysAllow => true;
+
+  @override
+  String? get webViewUserAgent => 'Mozilla/5.0 (Linux; Android 10) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.5481.153 Mobile Safari/537.36';
 }
