@@ -11,7 +11,10 @@
             android:label="Dinara Muratqyzy"
             android:name="${applicationName}"
             android:icon="@mipmap/ic_launcher"
-            android:requestLegacyExternalStorage="true">
+            android:requestLegacyExternalStorage="true"
+            android:allowBackup="false"
+            android:fullBackupContent="false"
+            tools:replace="android:allowBackup">
         <activity
                 android:name=".MainActivity"
                 android:exported="true"

@@ -19,30 +19,46 @@ abstract class _WishlistStore with Store {
 
   @observable
   ObservableList<CourseModel> data = ObservableList<CourseModel>.of([]);
-  String token = "";
+  
+  @observable
+  bool isLoading = false;
 
+  @action
   Future<void> getWishlist() async {
-    data.clear();
+    isLoading = true;
+    String token = await getToken();
+    if (token.isEmpty) {
+      data.clear();
+      isLoading = false;
+      return;
+    }
+
     var body = {
       "page": "1",
       "per_page": "1000",
       "optimize": "true",
     };
-    String token = await getToken();
-    var response =
-        await apiService.getPrivate(AppConstants.getWishList, token, body);
-    if (response.statusCode == 200) {
-      String temp = jsonEncode(response.body);
-      dynamic temp2 = jsonDecode(temp);
-      ResponseV2 resV2 = ResponseV2.fromJson(temp2);
-      List<CourseModel> lstTemp = [];
-      resV2.data?.forEach((item) {
-        CourseModel course = CourseModel.fromJson(item);
-        lstTemp.add(course);
-      });
-      data.addAll(lstTemp);
-    } else {
-      // throw Exception('Failed to load courses');
+    
+    try {
+      var response = await apiService.getPrivate(AppConstants.getWishList, token, body);
+      if (response.statusCode == 200) {
+        String temp = jsonEncode(response.body);
+        dynamic temp2 = jsonDecode(temp);
+        ResponseV2 resV2 = ResponseV2.fromJson(temp2);
+        
+        List<CourseModel> lstTemp = [];
+        resV2.data?.forEach((item) {
+          CourseModel course = CourseModel.fromJson(item);
+          lstTemp.add(course);
+        });
+        
+        data.clear();
+        data.addAll(lstTemp);
+      }
+    } catch (e) {
+      print("WishlistStore Error: $e");
+    } finally {
+      isLoading = false;
     }
   }
 
@@ -52,19 +68,25 @@ abstract class _WishlistStore with Store {
     data.addAll(items);
   }
 
+  @action
   Future<bool> toggleWishlist(CourseModel item) async {
+    String token = await getToken();
+    if (token.isEmpty) return false;
+
     var param = {
       "id": item.id,
     };
-    String token = await getToken();
-    var response =
-        await apiService.postPrivate(AppConstants.toggleWishlist, param, token);
-    if (response.statusCode == 200) {
-      await getWishlist();
-    }else{
-      return false;
+    
+    try {
+      var response = await apiService.postPrivate(AppConstants.toggleWishlist, param, token);
+      if (response.statusCode == 200) {
+        await getWishlist();
+        return true;
+      }
+    } catch (e) {
+      print("Toggle Wishlist Error: $e");
     }
-    return true;
+    return false;
   }
 
   Future<String> getToken() async {

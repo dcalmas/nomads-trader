@@ -7,7 +7,7 @@ import 'package:flutter_app/app/env.dart';
 import 'package:flutter_app/app/helper/router.dart';
 import 'package:flutter_app/app/util/theme.dart';
 import 'package:get_it_mixin/get_it_mixin.dart';
-// import 'package:flutter_app/app/util/toast.dart';
+import 'package:flutter_app/app/backend/mobx-store/session_store.dart';
 
 class SplashScreen extends StatefulWidget with GetItStatefulWidgetMixin {
   SplashScreen({Key? key}) : super(key: key);
@@ -17,141 +17,63 @@ class SplashScreen extends StatefulWidget with GetItStatefulWidgetMixin {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  // final Connectivity _connectivity = Connectivity();
-  // late StreamSubscription<ConnectivityResult> _connectivitySubscription;
-
   @override
   void initState() {
     super.initState();
-    // initConnectivity();
-    // _connectivitySubscription =
-    //     _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
     Get.find<SplashController>().initSharedData();
-
     _routing();
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    // _connectivitySubscription.cancel();
-  }
-
   void _routing() {
-    // Get.find<SplashController>().parser.saveWelcome(true);
-    Future.delayed(Duration.zero, () {
-      Get.offNamed(AppRouter.tabsBarRoutes);
+    final sessionStore = Get.find<SessionStore>();
+    
+    Future.delayed(const Duration(seconds: 2), () {
+      String token = sessionStore.getToken();
+      
+      if (token != "") {
+        // Пайдаланушы кірген болса - басты бетке
+        Get.offAllNamed(AppRouter.tabsBarRoutes);
+      } else {
+        // Пайдаланушы шыққан болса - логин бетіне
+        Get.offAllNamed(AppRouter.getLoginRoute());
+      }
     });
-    //   Get.find<SplashController>().getConfigData().then((isSuccess) {
-    //     if (isSuccess) {
-    //       if (Get.find<SplashController>().getLanguageCode() != '') {
-    //         var locale = Get.find<SplashController>().getLanguageCode();
-    //         Get.updateLocale(Locale(locale));
-    //       } else {
-    //         // var locale =
-    //         //     Get.find<SplashController>().defaultLanguage.languageCode != '' &&
-    //         //             Get.find<SplashController>()
-    //         //                     .defaultLanguage
-    //         //                     .languageCode !=
-    //         //                 ''
-    //         //         ? Locale(Get.find<SplashController>()
-    //         //             .defaultLanguage
-    //         //             .languageCode
-    //         //             .toString())
-    //         //         : Locale('en'.tr);
-    //         // Get.updateLocale(locale);
-    //       }
-
-    //       if (Get.find<SplashController>().parser.isNewUser() == false) {
-    //         Get.find<SplashController>().parser.saveWelcome(true);
-    //         Get.offNamed(AppRouter.getInitialRoute());
-    //       } else {
-    //         Get.find<SplashController>().parser.saveWelcome(true);
-    //         // Get.offNamed(AppRouter.getChooseLocationRoutes());
-    //       }
-    //       // if (Get.find<SplashController>().parser.isNewUser() == false) {
-    //       //   Get.find<SplashController>().parser.saveWelcome(true);
-    //       //   Get.offNamed(AppRouter.getIntroRoutes());
-    //       // } else {
-    //       //   Get.find<SplashController>().parser.saveWelcome(true);
-    //       //   Get.offNamed(AppRouter.getChooseLocationRoute());
-    //       // }
-    //     } else {
-    //       // Get.toNamed(AppRouter.getErrorRoutes());
-    //     }
-    //   });
   }
-
-  // Future<void> initConnectivity() async {
-  //   late ConnectivityResult result;
-  //   try {
-  //     result = await _connectivity.checkConnectivity();
-  //   } on PlatformException catch (e) {
-  //     e;
-  //     return;
-  //   }
-  //   if (!mounted) {
-  //     return Future.value(null);
-  //   }
-  //   return _updateConnectionStatus(result);
-  // }
-
-  // Future<void> _updateConnectionStatus(ConnectivityResult result) async {
-  //   bool isNotConnected = result != ConnectivityResult.wifi &&
-  //       result != ConnectivityResult.mobile;
-  //   if (isNotConnected) {
-  //     // showToast('No Internet Connection'.tr);
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<SplashController>(builder: (value) {
       return Scaffold(
+        backgroundColor: Colors.white,
         body: Stack(alignment: AlignmentDirectional.center, children: [
-          // const Image(
-          //   image: AssetImage('assets/images/splash.png'),
-          //   fit: BoxFit.cover,
-          //   height: double.infinity,
-          //   width: double.infinity,
-          //   alignment: Alignment.center,
-          // ),
-          // const Positioned(
-          //   top: 100,
-          //   child: Image(
-          //     image: AssetImage('assets/images/logo_white.png'),
-          //     fit: BoxFit.cover,
-          //     height: 50,
-          //     width: 50,
-          //     alignment: Alignment.center,
-          //   ), //CircularAvatar
-          // ),
           const Positioned(
-            top: 180,
-
+            top: 250,
             child: Center(
               child: Text(
                 Environments.appName,
                 style: TextStyle(
-                    color: ThemeProvider.whiteColor, fontFamily: 'bold'),
+                    color: Colors.black, 
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'bold'),
               ),
-            ), //CircularAvatar
+            ),
           ),
           const Positioned(
-            bottom: 50,
+            bottom: 100,
             child: Center(
               child: CircularProgressIndicator(
-                color: ThemeProvider.whiteColor,
+                color: Color(0xFF4A6CF7),
               ),
-            ), //CircularAvatar
+            ),
           ),
           Positioned(
-            bottom: 20,
+            bottom: 40,
             child: Center(
               child: Text(
                 'Developed By '.tr + Environments.companyName,
                 style: const TextStyle(
-                    color: ThemeProvider.whiteColor, fontFamily: 'bold'),
+                    color: Colors.grey, fontFamily: 'medium'),
               ),
             ),
           ),

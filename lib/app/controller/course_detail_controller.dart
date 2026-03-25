@@ -38,10 +38,14 @@ class CourseDetailController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    courseId = Get.arguments[0].toString();
-    getData();
+    if (Get.arguments != null && Get.arguments.isNotEmpty) {
+      courseId = Get.arguments[0].toString();
+      getData();
+    }
   }
+  
   handleGetIndexLesson(){
+    if (course.sections == null) return 0;
     ItemLesson? itemRedirect = ItemLesson();
     int i =0;
     for (var item in course.sections!) {
@@ -85,35 +89,15 @@ class CourseDetailController extends GetxController {
                 ? itemRedirect
                 : _course.sections![0].items![0],
             0);
+      } else {
+        DialogHelper.hideLoading();
       }
     });
-
   }
 
   void onNavigateLearning(item, index) {
     Get.toNamed(AppRouter.learning,
-        arguments: [item, index, courseId,sectionId]);
-  }
-
-  Future<void> onStartContinue() async {
-    if (_course.sections!.isNotEmpty &&
-        _course.sections != null &&
-        _course.sections?[0].items != null) {
-      List<ItemLesson>? itemRedirect = [];
-      for (var section in _course.sections!) {
-        if (itemRedirect == null &&
-            section.items!.isNotEmpty &&
-            section.items != null) {
-          itemRedirect = section.items?.where((x) => x.status != 'completed')
-              as List<ItemLesson>;
-        }
-      }
-
-      final item = itemRedirect != null && itemRedirect.isNotEmpty
-          ? itemRedirect[0]
-          : _course.sections?[0].items?[0];
-      onNavigateLearning(item, 0);
-    }
+        arguments: [item, index, courseId, sectionId]);
   }
 
   Future<void> onStartCourse() async {
@@ -121,13 +105,11 @@ class CourseDetailController extends GetxController {
       final response = await parser.enroll(courseId);
       if (response.statusCode == 200) {
         start();
-      } else {
-        // throw Exception('Failed to load courses');
       }
     } catch (e) {
       print(e);
     } finally {
-      isLoading = false; // hide loading indicator
+      isLoading = false;
     }
   }
 
@@ -142,11 +124,9 @@ class CourseDetailController extends GetxController {
           start();
         }
       });
-
     } catch (e) {
       print(e);
-    } finally {
-      isLoading = false; // hide loading indicator
+      DialogHelper.hideLoading();
     }
   }
 
@@ -161,21 +141,11 @@ class CourseDetailController extends GetxController {
           buttons: [
             DialogButton(
               color: Colors.red,
-              child: Text(
-                tr(LocaleKeys.alert_cancel),
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
+              child: Text(tr(LocaleKeys.alert_cancel), style: TextStyle(color: Colors.white)),
               onPressed: () => {Navigator.pop(context)},
             ),
             DialogButton(
-              child: Text(
-                tr(LocaleKeys.alert_btnLogin),
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
+              child: Text(tr(LocaleKeys.alert_btnLogin), style: TextStyle(color: Colors.white)),
               onPressed: () => {
                 Navigator.pop(context),
                 Get.toNamed(AppRouter.login)
@@ -187,14 +157,10 @@ class CourseDetailController extends GetxController {
         final response = await parser.enroll(courseId);
         if (response.statusCode == 200) {
           start();
-        } else {
-          // throw Exception('Failed to load courses');
         }
       }
     } catch (e) {
       print(e);
-    } finally {
-      isLoading = false; // hide loading indicator
     }
   }
 
@@ -202,39 +168,24 @@ class CourseDetailController extends GetxController {
     await getData();
   }
 
-  // function to fetch courses from API
   Future<void> getData() async {
     isLoading = true;
+    update();
     try {
       parser.setOverview(courseId);
       final response = await parser.getDetailCourse(courseId);
       if (response.statusCode == 200) {
-        // print(response.body);
         CourseModel courseTemp = CourseModel.fromJson(response.body);
         _course = courseTemp;
-        // print("status");
         courseStore.setDetail(courseTemp);
         getRating(3);
-      } else {
-        throw Exception('Failed to load courses');
       }
     } catch (e) {
-      print(e);
+      print("Error fetching course detail: $e");
     } finally {
-      isLoading = false; // hide loading indicator
-    }
-    refresh();
-    update();
-  }
-
-  Future<CourseModel> getDetailCourse(courseId) async {
-    final response = await parser.getDetailCourse(courseId.toString());
-    if(response.statusCode == 200){
+      isLoading = false;
       update();
-      refresh();
-      return CourseModel.fromJson(response.body);
     }
-    return CourseModel();
   }
 
   Future<void> onToggleWishlist(CourseModel item) async {
@@ -247,21 +198,11 @@ class CourseDetailController extends GetxController {
         buttons: [
           DialogButton(
             color: Colors.red,
-            child: Text(
-              tr(LocaleKeys.alert_cancel),
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
+            child: Text(tr(LocaleKeys.alert_cancel), style: TextStyle(color: Colors.white)),
             onPressed: () => {Navigator.pop(context)},
           ),
           DialogButton(
-            child: Text(
-             tr(LocaleKeys.alert_btnLogin),
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
+            child: Text(tr(LocaleKeys.alert_btnLogin), style: TextStyle(color: Colors.white)),
             onPressed: () => {
               Navigator.pop(context),
               Get.toNamed(AppRouter.login)
@@ -271,63 +212,43 @@ class CourseDetailController extends GetxController {
       ).show();
     } else {
       DialogHelper.showLoading();
-      final WishlistStore wishlistStore = Get.find<WishlistStore>();
-      await wishlistStore.toggleWishlist(item);
-      DialogHelper.hideLoading();
-      refreshData();
+      try {
+        final WishlistStore wishlistStore = Get.find<WishlistStore>();
+        await wishlistStore.toggleWishlist(item);
+        // Important: Notify the UI that MobX state has changed
+        update(); 
+      } catch (e) {
+        print("Wishlist toggle error: $e");
+      } finally {
+        DialogHelper.hideLoading();
+      }
     }
-    update();
   }
 
   Future<void> getRating(int? per_page) async {
     try {
       final response = await parser.getRating(courseId, per_page);
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 && response.body is Map) {
         review = response.body["data"];
         reviewMessage = response.body["message"];
         update();
       } else {
-        throw Exception('Failed to load review course --- Please check active plugin LP course review');
+        print("Review API returned non-JSON response or error code");
       }
     } catch (e) {
-      print(e);
-    } finally {}
+      print("Exception in getRating: $e");
+    }
   }
 
   Future<void> submitRating() async {
     var context = Get.context as BuildContext;
     try {
       if (titleController.text == "") {
-        Alert(
-          context: context,
-          title: tr(LocaleKeys.singleCourse_review),
-          desc: tr(LocaleKeys.singleCourse_reviewTitleEmpty),
-          buttons: [
-            DialogButton(
-              child: Text(
-               tr(LocaleKeys.alert_ok),
-              ),
-              onPressed: () => {Navigator.pop(context)},
-            ),
-          ],
-        ).show();
+        showToast(tr(LocaleKeys.singleCourse_reviewTitleEmpty), isError: true);
         return;
       }
       if (contentController.text == "") {
-        Alert(
-          context: context,
-          title: tr( LocaleKeys.singleCourse_review),
-          desc:
-              tr(LocaleKeys.singleCourse_reviewContentEmpty),
-          buttons: [
-            DialogButton(
-              child: Text(
-                tr(LocaleKeys.alert_ok),
-              ),
-              onPressed: () => {Navigator.pop(context)},
-            ),
-          ],
-        ).show();
+        showToast(tr(LocaleKeys.singleCourse_reviewContentEmpty), isError: true);
         return;
       }
 
@@ -344,14 +265,14 @@ class CourseDetailController extends GetxController {
         getRating(3);
         titleController.text = "";
         contentController.text = "";
-        showToast(response.body["message"]);
-        refresh();
+        showToast(response.body["message"] ?? "Review submitted");
         update();
       } else {
-        showToast(response.body["message"]);
+        showToast(response.body["message"] ?? "Failed to submit review", isError: true);
       }
     } catch (e) {
       print(e);
-    } finally {}
+      context.loaderOverlay.hide();
+    }
   }
 }

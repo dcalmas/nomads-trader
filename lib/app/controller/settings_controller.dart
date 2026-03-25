@@ -67,7 +67,6 @@ class SettingsController extends GetxController {
 
   Future<void> submitPassword() async {
     var context = Get.context as BuildContext;
-    final value = ProfileController(sessionStore: sessionStore,myProfileParser: Get.find());
     if (currentPasswordController.text.trim() == "") {
       Alert(
               context: context,
@@ -122,11 +121,11 @@ class SettingsController extends GetxController {
           )
               .show();
           Future.delayed(Duration(seconds: 3), () {
-            value.logout();
+            sessionStore.logout();
             currentPasswordController.text = "";
             newPasswordController.text = "";
             confirmPasswordController.text = "";
-            Get.toNamed(AppRouter.home);
+            Get.offAllNamed(AppRouter.login);
             update();
           });
 
@@ -152,7 +151,6 @@ class SettingsController extends GetxController {
 
   Future<void> deleteAccount() async {
     var context = Get.context as BuildContext;
-    final value = ProfileController(sessionStore: sessionStore,myProfileParser: Get.find());
     var userInfo = getUser();
     if (deletePasswordController.text.trim() == "") {
       Alert(
@@ -176,12 +174,16 @@ class SettingsController extends GetxController {
           Alert(
                   context: context,
                   title: "Success",
-                  desc: Text("{}").tr(args: [response.body["message"]]).toString()
+                  desc: response.body["message"] ?? "Account deleted successfully"
           )
               .show();
-          Future.delayed(Duration(seconds: 2),(){
-            value.logout();
-            Get.offAll(TabScreen());
+          Future.delayed(Duration(seconds: 2), () async {
+            // 1. Clear session and storage
+            await sessionStore.logout();
+            
+            // 2. Redirect to Login screen and clear stack
+            Get.offAllNamed(AppRouter.login);
+            
             deletePasswordController.text = "";
             update();
           });
@@ -190,8 +192,7 @@ class SettingsController extends GetxController {
           Alert(
                   context: context,
                   title: "Error",
-                  desc:
-                  Text("{}").tr(args: [response.body["message"]]).toString()
+                  desc: response.body["message"] ?? "Error deleting account"
           )
               .show();
         }
@@ -200,8 +201,7 @@ class SettingsController extends GetxController {
         Alert(
             context: context,
             title: "Error",
-            desc:
-            Text("{}").tr(args: [response.body["message"]]).toString()
+            desc: response.body["message"] ?? "Server error"
         )
             .show();
       }

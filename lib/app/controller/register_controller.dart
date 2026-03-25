@@ -17,12 +17,17 @@ class RegisterController extends GetxController implements GetxService {
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
   bool agreedToTerms = false;
-  final WishlistStore wishlistStore = Get.find<WishlistStore>();
-  final SessionStore sessionStore = Get.find<SessionStore>();
-  final HomeController homeController = Get.find<HomeController>();
-  final MyCoursesController myCourseController = Get.find<MyCoursesController>();
+
   RegisterController({required this.parser});
   bool apiCalled = false;
+
+  // Safely get controllers only when needed
+  WishlistStore get wishlistStore => Get.find<WishlistStore>();
+  SessionStore get sessionStore => Get.find<SessionStore>();
+  
+  // HomeController and MyCoursesController might not be initialized yet during register
+  HomeController? get homeController => Get.isRegistered<HomeController>() ? Get.find<HomeController>() : null;
+  MyCoursesController? get myCourseController => Get.isRegistered<MyCoursesController>() ? Get.find<MyCoursesController>() : null;
 
   Future<void> register() async {
     var context = Get.context as BuildContext;
@@ -40,11 +45,6 @@ class RegisterController extends GetxController implements GetxService {
     }
     if (confirmPasswordController.text == "") {
       showToast("Confirm is required", isError: true);
-      return;
-    }
-
-    if (confirmPasswordController.text != passwordController.text) {
-      showToast("Confirmation password incorrect!", isError: true);
       return;
     }
 
@@ -71,18 +71,21 @@ class RegisterController extends GetxController implements GetxService {
       Map<String, dynamic> myMap = Map<String, dynamic>.from(response.body);
       parser.saveToken(myMap['token']);
       await parser.getUser();
-      // sessionStore.setToken(myMap['token']);
+      
       wishlistStore.getWishlist();
-      myCourseController.refreshData();
+      myCourseController?.refreshData();
+      
       parser.saveUser(myMap['user_id'], myMap['user_login'],
           myMap['user_email'], myMap['user_display_name']);
-      homeController.refreshScreen();
+          
+      homeController?.refreshScreen();
+      
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => TabScreen()),
       );
     } else {
-      showToast(response.body["message"], isError: true);
+      showToast(response.body["message"] ?? "Registration failed", isError: true);
     }
   }
 }

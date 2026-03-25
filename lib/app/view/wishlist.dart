@@ -28,9 +28,12 @@ class _WishlistScreenState extends State<WishlistScreen> {
     });
   }
 
-  final WishlistStore wishlistStore = Get.find<WishlistStore>();
-  final HomeController homeController = Get.find<HomeController>();
-  final CoursesController courseController = Get.find<CoursesController>();
+  // Safe access to controllers
+  WishlistStore get wishlistStore => Get.find<WishlistStore>();
+  
+  HomeController? get homeController => Get.isRegistered<HomeController>() ? Get.find<HomeController>() : null;
+  CoursesController? get courseController => Get.isRegistered<CoursesController>() ? Get.find<CoursesController>() : null;
+
   var screenWidth =
       (window.physicalSize.shortestSide / window.devicePixelRatio);
   var screenHeight =
@@ -38,6 +41,11 @@ class _WishlistScreenState extends State<WishlistScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Ensure WishlistController is available
+    if (!Get.isRegistered<WishlistController>()) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    }
+
     return GetBuilder<WishlistController>(builder: (value) {
       return Scaffold(
         key: _scaffoldKey,
@@ -68,7 +76,6 @@ class _WishlistScreenState extends State<WishlistScreen> {
                 Container(
                   height: 80.0,
                   width: screenWidth,
-                  // color: Colors.blue,
                   padding: EdgeInsets.fromLTRB(
                       16, MediaQuery.of(context).viewPadding.top-10, 16, 0),
                   child: Row(
@@ -187,7 +194,7 @@ class _WishlistScreenState extends State<WishlistScreen> {
                         child: RefreshIndicator(
                           onRefresh: () => value.refreshData(),
                           child: ListView.builder(
-                              padding: const EdgeInsets.only(bottom: 100), // Nav bar space
+                              padding: const EdgeInsets.only(bottom: 100),
                               controller: value.scrollController,
                               itemCount: wishlistStore.data.length +
                                   (value.isLoadingMore ? 1 : 0),
@@ -206,8 +213,8 @@ class _WishlistScreenState extends State<WishlistScreen> {
                                       onToggleWishlist: () async => {
                                             await value.onToggleWishlist(
                                                 wishlistStore.data[index]),
-                                            homeController.refreshScreen(),
-                                            courseController.refreshScreen(),
+                                            homeController?.refreshScreen(),
+                                            courseController?.refreshScreen(),
                                           },
                                     hideCategory: true,
                                           );

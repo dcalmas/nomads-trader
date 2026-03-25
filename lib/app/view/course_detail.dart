@@ -45,11 +45,12 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
 
   final courseStore = locator<CourseStore>();
   final WishlistStore wishlistStore = Get.find<WishlistStore>();
-  final CoursesController courseController = Get.find<CoursesController>();
-  final PaymentController paymentController = Get.find<PaymentController>();
-  final HomeController homeController = Get.find<HomeController>();
-  final CourseDetailController courseDetailController =
-      Get.find<CourseDetailController>();
+  
+  // Using lazy getters to avoid initialization issues
+  CoursesController? get courseController => Get.isRegistered<CoursesController>() ? Get.find<CoursesController>() : null;
+  PaymentController? get paymentController => Get.isRegistered<PaymentController>() ? Get.find<PaymentController>() : null;
+  HomeController? get homeController => Get.isRegistered<HomeController>() ? Get.find<HomeController>() : null;
+  CourseDetailController get courseDetailController => Get.find<CourseDetailController>();
 
   void _launchUrl(String url) async {
     if (await canLaunch(url)) {
@@ -59,7 +60,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
 
   @override
   void initState() {
-    if (Get.arguments.length > 1 && Get.arguments[1] == 'reloadPage') refreshData();
+    if (Get.arguments != null && Get.arguments.length > 1 && Get.arguments[1] == 'reloadPage') refreshData();
     super.initState();
   }
 
@@ -420,7 +421,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
         );
       } else {
 
-        homeController.setOverviewId(value.courseId);
+        homeController?.setOverviewId(value.courseId);
 
         return Scaffold(
           key: _scaffoldKey,
@@ -461,7 +462,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                           // width: 40,
                           child: IconButton(
                             onPressed: () {
-                              homeController.getOverview();
+                              homeController?.getOverview();
                               value.onBack();
                             },
                             icon: Image.asset('assets/images/icon/icon-back.png',color: Colors.black,height: 14,width: 14,),
@@ -516,55 +517,31 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                                 Positioned(
                                   top: 25,
                                   right: 15,
-                                  child: wishlistStore.data.any((element) =>
-                                              element.id ==
-                                              courseStore.detail?.id) ==
-                                          true
-                                      ? GestureDetector(
-                                          onTap: () async => {
-                                                await value.onToggleWishlist(
-                                                    courseStore.detail!),
-                                                courseController
-                                                    .refreshScreen(),
-                                                homeController.refreshScreen(),
-                                              },
-                                          child: Container(
-                                            width: 40,
-                                            height: 40,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                              BorderRadius.all(Radius.circular(10)),
-                                              color: Colors.amber,
-                                            ),
-                                            child: Icon(
-                                              Icons.favorite_border,
-                                              color: Colors.white,
-                                              size: 22,
-                                            ),
-                                          )
-                                  )
-                                      : GestureDetector(
-                                          onTap: () async => {
-                                                await value.onToggleWishlist(
-                                                    courseStore.detail!),
-                                                courseController
-                                                    .refreshScreen(),
-                                                homeController.refreshScreen(),
-                                              },
-                                          child: Container(
-                                            width: 40,
-                                            height: 40,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                              BorderRadius.all(Radius.circular(10)),
-                                              color: Colors.black.withOpacity(0.2),
-                                            ),
-                                            child: Icon(
-                                              Icons.favorite_border,
-                                              color: Colors.white,
-                                              size: 22,
-                                            ),
-                                          )
+                                  child: Observer(
+                                    builder: (_) {
+                                      final isWishlisted = wishlistStore.data.any((element) =>
+                                                  element.id == courseStore.detail?.id);
+                                      return GestureDetector(
+                                        onTap: () async {
+                                          await value.onToggleWishlist(courseStore.detail!);
+                                          courseController?.refreshScreen();
+                                          homeController?.refreshScreen();
+                                        },
+                                        child: Container(
+                                          width: 40,
+                                          height: 40,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                                            color: isWishlisted ? Colors.amber : Colors.black.withOpacity(0.2),
+                                          ),
+                                          child: Icon(
+                                            isWishlisted ? Icons.favorite : Icons.favorite_border,
+                                            color: Colors.white,
+                                            size: 22,
+                                          ),
+                                        ),
+                                      );
+                                    },
                                   ),
                                 ),
                                 Positioned(
@@ -692,7 +669,8 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                                             ],
                                           )
                                         else if (value.course.price != null &&
-                                            value.course.price! > 0)
+                                            value.course.price! > 0 &&
+                                            value.course.course_data?.status == "")
                                           Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
@@ -1151,7 +1129,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                                         borderRadius: BorderRadius.circular(8),
                                       ),
                                     ),
-                                    onPressed: () => paymentController.handleRestoreCourse(),
+                                    onPressed: () => paymentController?.handleRestoreCourse(),
                                     child: Text(tr(LocaleKeys.singleCourse_btnRestore)),
                                   ),
                                   SizedBox(width: 16),
@@ -1167,7 +1145,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> {
                                       ),
                                     ),
                                     onPressed: (){
-                                      paymentController.buyProduct(
+                                      paymentController?.buyProduct(
                                           ProductDetails(id: value.course.id.toString(), title: '', description: '', price: '', rawPrice: 0, currencyCode: '')
                                       );
                                     },
