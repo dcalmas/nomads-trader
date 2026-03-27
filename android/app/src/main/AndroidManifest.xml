@@ -8,13 +8,13 @@
     <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
     
     <application
-            android:label="Dinara Muratqyzy"
+            android:label="BilimKey"
             android:name="${applicationName}"
             android:icon="@mipmap/ic_launcher"
             android:requestLegacyExternalStorage="true"
             android:allowBackup="false"
             android:fullBackupContent="false"
-            tools:replace="android:allowBackup">
+            tools:replace="android:allowBackup,android:label">
         <activity
                 android:name=".MainActivity"
                 android:exported="true"

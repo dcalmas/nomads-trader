@@ -1,8 +1,8 @@
 class Environments {
   static const String appName = 'dcapp';
   static const String companyName = 'Dcplatforma';
-  static const String apiBaseURL = 'https://dinara.nomadstrader.com/';
-  static const String websiteURL = 'https://dinara.nomadstrader.com/';
+  static const String apiBaseURL = 'https://bilimkey.kz/';
+  static const String websiteURL = 'https://bilimkey.kz/';
   static const String appVersion = '1.2.0';
   static const String appBuild = '10100';
   //login social

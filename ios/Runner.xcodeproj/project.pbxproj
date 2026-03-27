@@ -373,15 +373,15 @@
 				DEVELOPMENT_TEAM = 85688J8D7K;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Nomads Trader\n\nEduma Flutter\n\n\nEduma Flutter\n\n\nEduma Flutter\n\n\nEduma Flutter\nEduma Flutter\n\nEduma Flutter\n\nEduma Flutter";
+				INFOPLIST_KEY_CFBundleDisplayName = BilimKey;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dinara.edu;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.bilimkey.kz;
+				PRODUCT_NAME = BilimKey;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -515,15 +515,15 @@
 				DEVELOPMENT_TEAM = 85688J8D7K;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Nomads Trader\n\nEduma Flutter\n\n\nEduma Flutter\n\n\nEduma Flutter\n\n\nEduma Flutter\nEduma Flutter\n\nEduma Flutter\n\nEduma Flutter";
+				INFOPLIST_KEY_CFBundleDisplayName = BilimKey;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dinara.edu;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.bilimkey.kz;
+				PRODUCT_NAME = BilimKey;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -551,15 +551,15 @@
 				DEVELOPMENT_TEAM = 85688J8D7K;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Nomads Trader\n\nEduma Flutter\n\n\nEduma Flutter\n\n\nEduma Flutter\n\n\nEduma Flutter\nEduma Flutter\n\nEduma Flutter\n\nEduma Flutter";
+				INFOPLIST_KEY_CFBundleDisplayName = BilimKey;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dinara.edu;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.bilimkey.kz;
+				PRODUCT_NAME = BilimKey;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;

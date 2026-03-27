@@ -32,7 +32,7 @@ if (localPropertiesFile.exists()) {
     // apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
     android {
-        namespace 'com.dinara.edu'
+        namespace 'com.bilimkey.kz'
         compileSdkVersion 36
         ndkVersion flutter.ndkVersion
 
@@ -58,7 +58,7 @@ if (localPropertiesFile.exists()) {
         }
 
         defaultConfig {
-            applicationId "com.dinara.edu"
+            applicationId "com.bilimkey.kz"
             minSdkVersion flutter.minSdkVersion
             targetSdkVersion 36
             versionCode flutterVersionCode.toInteger()
